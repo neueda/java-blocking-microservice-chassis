@@ -1,0 +1,70 @@
+spring:
+  main:
+    banner-mode: log
+  config:
+    import: "configtree:db/"
+
+  application:
+    name: @project.artifactId@
+
+  h2:
+    console:
+      enabled: on
+
+  sql:
+    init:
+      mode: never
+
+  liquibase:
+    change-log: "classpath:/db/changelog/db.changelog-master.xml"
+    url: jdbc:${liquibase.database}
+    user: ${liquibase.username:sa}
+    password: ${liquibase.password}
+    test-rollback-on-update: on
+
+  datasource:
+    url: jdbc:${app.database}
+    username: ${app.username:sa}
+    password: ${app.password}
+    driverClassName: org.h2.Driver
+
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+
+  codec:
+    log-request-details: on
+
+server:
+  port: 8080
+  error:
+    include-exception: on
+    include-stacktrace: always
+
+springdoc:
+  api-docs:
+    enabled: on
+    path: /api-docs
+
+apidoc:
+  title: @project.name@
+  description: @project.description@
+  version: @project.version@
+
+debug: off
+trace: off
+logging:
+  file:
+    path: /var/log/@build.name@
+  level:
+    root: error
+    web: trace
+    sql: trace
+    org:
+      springframework:
+        jdbc:
+          datasource: trace
+
+
