@@ -25,8 +25,8 @@ RUN mkdir -p /var/log/blocking-microservice
 
 EXPOSE 8080/tcp
 
-COPY --from=builder /tmp/build/blocking-microservice/db db/
-COPY --from=builder /tmp/build/blocking-microservice/target/${APP_NAME}.jar ./
+COPY --from=builder /tmp/build/$APP_NAME/db db/
+COPY --from=builder /tmp/build/$APP_NAME/target/${APP_NAME}.jar ./
 
 RUN chmod -R 777 db/
 

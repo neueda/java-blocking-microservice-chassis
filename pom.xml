@@ -16,6 +16,7 @@
 	<properties>
 		<java.version>16</java.version>
 		<spring-cloud.version>2020.0.3</spring-cloud.version>
+		<build.name>${project.artifactId}-${project.version}</build.name>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -74,6 +75,7 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>${build.name}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
