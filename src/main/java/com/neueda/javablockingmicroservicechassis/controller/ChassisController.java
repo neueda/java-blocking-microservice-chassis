@@ -60,7 +60,7 @@ public class ChassisController {
     }
 
     @DeleteMapping({"/chassis/{id}"})
-    public ResponseEntity<?> deleteTodo(@PathVariable("id") String id) {
+    public ResponseEntity<?> deleteChassis(@PathVariable("id") String id) {
         chassisService.deleteChassis(Long.valueOf(id));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
