@@ -1,5 +1,6 @@
 package com.neueda.javablockingmicroservicechassis.controller;
 
+import com.neueda.javablockingmicroservicechassis.dto.ChassisDTO;
 import com.neueda.javablockingmicroservicechassis.entity.ChassisEntity;
 import com.neueda.javablockingmicroservicechassis.service.ChassisService;
 import lombok.RequiredArgsConstructor;
@@ -54,8 +55,8 @@ public class ChassisController {
     }
 
     @PostMapping("/chassis")
-    public ResponseEntity<?> create(@RequestBody ChassisEntity chassisEntity){
-        ChassisEntity chassis = chassisService.addChassis(chassisEntity);
+    public ResponseEntity<?> create(@RequestBody ChassisDTO chassisDTO){
+        ChassisEntity chassis = chassisService.addChassis(chassisDTO);
         return new ResponseEntity<>(chassis, HttpStatus.CREATED);
     }
 

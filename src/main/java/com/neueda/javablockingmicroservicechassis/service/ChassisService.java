@@ -1,5 +1,6 @@
 package com.neueda.javablockingmicroservicechassis.service;
 
+import com.neueda.javablockingmicroservicechassis.dto.ChassisDTO;
 import com.neueda.javablockingmicroservicechassis.entity.ChassisEntity;
 import com.neueda.javablockingmicroservicechassis.repository.ChassisRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,10 +25,10 @@ public class ChassisService {
         return chassisRepository.findByName(name);
     }
 
-    public ChassisEntity addChassis(ChassisEntity chassis){
+    public ChassisEntity addChassis(ChassisDTO chassisDTO){
         ChassisEntity chassisEntity = new ChassisEntity();
-        chassisEntity.setName(chassis.getName());
-        chassisEntity.setDescription(chassis.getDescription());
+        chassisEntity.setName(chassisDTO.getName());
+        chassisEntity.setDescription(chassisDTO.getDescription());
         return chassisRepository.save(chassisEntity);
     }
 
