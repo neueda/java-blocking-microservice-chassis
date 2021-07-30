@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
-
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.contains;
 import static org.springframework.data.domain.ExampleMatcher.matching;
 
@@ -23,8 +20,8 @@ public class ChassisService {
         return chassisRepository.findAll();
     }
 
-    public Optional <ChassisEntity> retriveChassisById(Long id){
-        return chassisRepository.findById(id);
+    public ChassisEntity retriveChassisById(Long id){
+        return chassisRepository.findById(id).get();
     }
 
     public List<ChassisEntity> searchChassisByName(String name){
@@ -43,6 +40,10 @@ public class ChassisService {
         chassisEntity.setDescription(chassis.getDescription());
 
         return chassisRepository.save(chassisEntity);
+    }
+
+    public void deleteChassis(Long id) {
+        chassisRepository.deleteById(id);
     }
 
 
