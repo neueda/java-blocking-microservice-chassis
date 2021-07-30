@@ -67,4 +67,6 @@ logging:
         jdbc:
           datasource: trace
 
-
+data:
+  exception:
+    message1: ChassisEntityNotFound
