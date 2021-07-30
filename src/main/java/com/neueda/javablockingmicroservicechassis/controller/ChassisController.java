@@ -2,6 +2,7 @@ package com.neueda.javablockingmicroservicechassis.controller;
 
 import com.neueda.javablockingmicroservicechassis.dto.ChassisDTO;
 import com.neueda.javablockingmicroservicechassis.entity.ChassisEntity;
+import com.neueda.javablockingmicroservicechassis.exception.ChassisEntityNotFoundException;
 import com.neueda.javablockingmicroservicechassis.service.ChassisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,7 @@ public class ChassisController {
     }
 
     @GetMapping("/chassis/{id}")
-    public ResponseEntity<?> getChassisById(@PathVariable String id){
+    public ResponseEntity<?> getChassisById(@PathVariable String id) throws ChassisEntityNotFoundException {
         ChassisEntity chassis = chassisService.retriveChassisById(Long.valueOf(id));
         return new ResponseEntity<>(chassis, HttpStatus.OK);
     }
