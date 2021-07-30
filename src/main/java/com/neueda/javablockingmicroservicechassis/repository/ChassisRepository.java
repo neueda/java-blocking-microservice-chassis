@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface ChassisRepository extends JpaRepository<ChassisEntity, Long> {
-     Optional<ChassisEntity> findById(Long id);
+
 }

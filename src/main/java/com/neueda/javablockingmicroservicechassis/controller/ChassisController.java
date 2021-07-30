@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1")
@@ -35,19 +34,30 @@ public class ChassisController {
     }
 
     @GetMapping("/chassis/{id}")
-    public Optional<ChassisEntity> getChassisById(@PathVariable String id){
-        return chassisService.retriveChassisById(Long.valueOf(id));
+    public ResponseEntity<?> getChassisById(@PathVariable String id){
+        ChassisEntity chassis = chassisService.retriveChassisById(Long.valueOf(id));
+        return new ResponseEntity<>(chassis, HttpStatus.OK);
     }
 
     @GetMapping("/chassisSearch")
-    public List<ChassisEntity> getChassisByName(@RequestParam String name){
-        return chassisService.searchChassisByName(name);
+    public ResponseEntity<?> getChassisByName(@RequestParam String name){
+        List<ChassisEntity> chassisEntities = chassisService.searchChassisByName(name);
+        if(chassisEntities.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(chassisEntities, HttpStatus.OK);
     }
 
     @PostMapping("/chassis")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ChassisEntity create(@RequestBody ChassisEntity chassisEntity){
-        return chassisService.addChassis(chassisEntity);
+    public ResponseEntity<?> create(@RequestBody ChassisEntity chassisEntity){
+        ChassisEntity chassis = chassisService.addChassis(chassisEntity);
+        return new ResponseEntity<>(chassis, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping({"/chassis/{id}"})
+    public ResponseEntity<?> deleteTodo(@PathVariable("id") String id) {
+        chassisService.deleteChassis(Long.valueOf(id));
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
