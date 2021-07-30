@@ -14,7 +14,7 @@ public class ChassisService {
 
     private final ChassisRepository chassisRepository;
 
-    public List<ChassisEntity> retrieveAllChassis(){
+    public List<ChassisEntity> retrieveAllChassis() {
         return chassisRepository.findAll();
     }
 
@@ -25,7 +25,10 @@ public class ChassisService {
         return chassisRepository.findById(id).get();
     }
 
-    public List<ChassisEntity> searchChassisByName(String name){
+    public List<ChassisEntity> searchChassisByName(String name) throws ChassisEntityNotFoundException{
+        if(chassisRepository.findByName(name).isEmpty()){
+            throw new ChassisEntityNotFoundException();
+        }
         return chassisRepository.findByName(name);
     }
 
@@ -36,7 +39,10 @@ public class ChassisService {
         return chassisRepository.save(chassisEntity);
     }
 
-    public void deleteChassis(Long id) {
+    public void deleteChassis(Long id) throws ChassisEntityNotFoundException{
+        if(chassisRepository.findById(id).isEmpty()){
+            throw new ChassisEntityNotFoundException();
+        }
         chassisRepository.deleteById(id);
     }
 

@@ -47,11 +47,8 @@ public class ChassisController {
     }
 
     @GetMapping("/chassisSearch")
-    public ResponseEntity<?> getChassisByName(@RequestParam String name){
+    public ResponseEntity<?> getChassisByName(@RequestParam String name) throws ChassisEntityNotFoundException{
         List<ChassisEntity> chassisEntities = chassisService.searchChassisByName(name);
-        if(chassisEntities.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(chassisEntities, HttpStatus.OK);
     }
 
@@ -62,7 +59,7 @@ public class ChassisController {
     }
 
     @DeleteMapping({"/chassis/{id}"})
-    public ResponseEntity<?> deleteChassis(@PathVariable("id") String id) {
+    public ResponseEntity<?> deleteChassis(@PathVariable("id") String id) throws ChassisEntityNotFoundException{
         chassisService.deleteChassis(Long.valueOf(id));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
