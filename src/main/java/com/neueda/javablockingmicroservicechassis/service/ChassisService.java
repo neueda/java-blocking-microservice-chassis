@@ -2,7 +2,7 @@ package com.neueda.javablockingmicroservicechassis.service;
 
 import com.neueda.javablockingmicroservicechassis.entity.ChassisEntity;
 import com.neueda.javablockingmicroservicechassis.repository.ChassisRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
@@ -10,11 +10,12 @@ import java.util.List;
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.contains;
 import static org.springframework.data.domain.ExampleMatcher.matching;
 
+@RequiredArgsConstructor
 @Service
 public class ChassisService {
 
-    @Autowired
-    private ChassisRepository chassisRepository;
+
+    private final ChassisRepository chassisRepository;
 
     public List<ChassisEntity> retrieveAllChassis(){
         return chassisRepository.findAll();
