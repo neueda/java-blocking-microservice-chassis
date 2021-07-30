@@ -12,7 +12,7 @@ public class GlobalExceptionHandler {
     private String message1;
 
     @ExceptionHandler(value = ChassisEntityNotFoundException.class)
-    public ResponseEntity blogNotFoundException(ChassisEntityNotFoundException blogNotFoundException) {
+    public ResponseEntity ChassisEntityNotFoundException(ChassisEntityNotFoundException chassisEntityNotFoundException) {
         return new ResponseEntity<String>(message1, HttpStatus.NOT_FOUND);
     }
 
