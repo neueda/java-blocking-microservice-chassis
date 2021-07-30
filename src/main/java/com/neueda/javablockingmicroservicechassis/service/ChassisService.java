@@ -2,6 +2,7 @@ package com.neueda.javablockingmicroservicechassis.service;
 
 import com.neueda.javablockingmicroservicechassis.dto.ChassisDTO;
 import com.neueda.javablockingmicroservicechassis.entity.ChassisEntity;
+import com.neueda.javablockingmicroservicechassis.exception.ChassisEntityNotFoundException;
 import com.neueda.javablockingmicroservicechassis.repository.ChassisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,10 @@ public class ChassisService {
         return chassisRepository.findAll();
     }
 
-    public ChassisEntity retriveChassisById(Long id){
+    public ChassisEntity retriveChassisById(Long id) throws ChassisEntityNotFoundException {
+        if(chassisRepository.findById(id).isEmpty()){
+            throw new ChassisEntityNotFoundException();
+        }
         return chassisRepository.findById(id).get();
     }
 
