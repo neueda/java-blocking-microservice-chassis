@@ -1,4 +1,5 @@
 version: "3.9"
+
 services:
   chassis:
     container_name: chassis-openj9
@@ -8,10 +9,16 @@ services:
     networks:
     - microservice
     ports:
-    - 8080:8080
+    - "8080:8080"
     volumes:
-    - ./db:/opt/app/blocking-microservice/db
-    - ./log:/var/log/blocking-microservice
+    - db_credentials:/opt/app/blocking-microservice/db
+    - log:/var/log/blocking-microservice
+
+volumes:
+  db_credentials:
+    name: db-data
+  log:
+    name: log-data
 
 networks:
   microservice:
