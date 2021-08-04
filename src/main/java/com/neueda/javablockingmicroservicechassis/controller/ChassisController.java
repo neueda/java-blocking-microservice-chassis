@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -46,8 +45,8 @@ public class ChassisController {
         return new ResponseEntity<>(chassis, HttpStatus.OK);
     }
 
-    @GetMapping("/chassisSearch")
-    public ResponseEntity<?> getChassisByName(@RequestParam String name) throws ChassisEntityNotFoundException{
+    @GetMapping("/chassisSearch/{name}")
+    public ResponseEntity<?> getChassisByName(@PathVariable String name) throws ChassisEntityNotFoundException{
         List<ChassisEntity> chassisEntities = chassisService.searchChassisByName(name);
         return new ResponseEntity<>(chassisEntities, HttpStatus.OK);
     }
