@@ -4,6 +4,7 @@ package com.neueda.javablockingmicroservicechassis.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.neueda.javablockingmicroservicechassis.dto.ChassisDTO;
 import com.neueda.javablockingmicroservicechassis.entity.ChassisEntity;
+import com.neueda.javablockingmicroservicechassis.exception.ChassisEntityNotFoundException;
 import com.neueda.javablockingmicroservicechassis.repository.ChassisRepository;
 import com.neueda.javablockingmicroservicechassis.service.ChassisService;
 import org.assertj.core.api.BDDAssertions;
@@ -48,6 +49,16 @@ class ChassisControllerTest {
         mockMvc.perform(get("/v1/chassis"))
                 // then
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void testGetAllChassis_EntityNotFound() throws Exception {
+        //given
+        when(chassisService.retrieveAllChassis()).thenThrow(new ChassisEntityNotFoundException(""));
+        //when
+        mockMvc.perform(get("/v1/chassis"))
+                //then
+                .andExpect(status().isNotFound());
     }
 
     @Test
