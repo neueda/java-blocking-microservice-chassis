@@ -7,17 +7,13 @@ import com.neueda.javablockingmicroservicechassis.entity.ChassisEntity;
 import com.neueda.javablockingmicroservicechassis.repository.ChassisRepository;
 import com.neueda.javablockingmicroservicechassis.service.ChassisService;
 import org.assertj.core.api.BDDAssertions;
-import org.assertj.core.api.ThrowableAssert;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
@@ -56,30 +52,38 @@ class ChassisControllerTest {
 
     @Test
     void testGetChassisById() throws Exception {
-        ChassisEntity chassisEntity = new ChassisEntity(5L,"name 5","description 5");
-        when(chassisService.retriveChassisById(5L)).thenReturn(chassisEntity);
-        String url = "/v1/chassis/5";
-        mockMvc.perform(get(url)).andExpect(status().isOk());
+        //given
+        when(chassisService.retriveChassisById(5L)).thenReturn(new ChassisEntity(5L,"name 5","description 5"));
+
+        //when
+        mockMvc.perform(get("/v1/chassis/5"))
+                //then
+                .andExpect(status().isOk());
     }
 
     @Test
     void getChassisByName() throws Exception {
-        List<ChassisEntity> chassisEntityList = new ArrayList<>();
-        chassisEntityList.add(new ChassisEntity(1L,"name","description 1"));
-        chassisEntityList.add(new ChassisEntity(2L,"name","description 2"));
+        //given
         String name = "name";
-        when(chassisService.searchChassisByName(name)).thenReturn(chassisEntityList);
-        String url = "/v1/chassisSearch/name";
-        mockMvc.perform(get(url)).andExpect(status().isOk());
+        when(chassisService.searchChassisByName(name)).thenReturn(List.of(
+                new ChassisEntity(1L,"name","description 1"),
+                new ChassisEntity(2L,"name","description 2")));
+        //when
+        mockMvc.perform(get("/v1/chassisSearch/name"))
+                //then
+                .andExpect(status().isOk());
     }
 
     @Test
     void testCreate() throws Exception {
+        //given
         ChassisEntity chassisEntity = new ChassisEntity(6L,"name 6","description 6");
         ChassisDTO chassisDTO = new ChassisDTO("name 6","description 6");
         when(chassisService.addChassis(chassisDTO)).thenReturn(chassisEntity);
-        String url = "/v1/chassis";
-        mockMvc.perform(post(url).contentType("application/json").content(objectMapper.writeValueAsString(chassisDTO))).andExpect(status().isCreated());
+        //when
+        mockMvc.perform(post("/v1/chassis").contentType("application/json").content(objectMapper.writeValueAsString(chassisDTO)))
+                //then
+                .andExpect(status().isCreated());
     }
 
     @Test
