@@ -71,9 +71,18 @@ class ChassisControllerTest {
                 //then
                 .andExpect(status().isOk());
     }
+    @Test
+    void testGetChassisById_EntityNotFound() throws Exception {
+        //given
+        when(chassisService.retriveChassisById(5L)).thenThrow(new ChassisEntityNotFoundException(""));
+        //when
+        mockMvc.perform(get("/v1/chassis/5"))
+                //then
+                .andExpect(status().isNotFound());
+    }
 
     @Test
-    void getChassisByName() throws Exception {
+    void testGetChassisByName() throws Exception {
         //given
         String name = "name";
         when(chassisService.searchChassisByName(name)).thenReturn(List.of(
@@ -83,6 +92,17 @@ class ChassisControllerTest {
         mockMvc.perform(get("/v1/chassisSearch/name"))
                 //then
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void testGetChassisByName_EntityNotFound() throws Exception {
+        //given
+        String name = "name";
+        when(chassisService.searchChassisByName(name)).thenThrow(new ChassisEntityNotFoundException(""));
+        //when
+        mockMvc.perform(get("/v1/chassisSearch/name"))
+                //then
+                .andExpect(status().isNotFound());
     }
 
     @Test
