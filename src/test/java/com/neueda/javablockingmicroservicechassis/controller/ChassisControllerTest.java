@@ -6,6 +6,9 @@ import com.neueda.javablockingmicroservicechassis.dto.ChassisDTO;
 import com.neueda.javablockingmicroservicechassis.entity.ChassisEntity;
 import com.neueda.javablockingmicroservicechassis.repository.ChassisRepository;
 import com.neueda.javablockingmicroservicechassis.service.ChassisService;
+import org.assertj.core.api.BDDAssertions;
+import org.assertj.core.api.ThrowableAssert;
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
@@ -23,7 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ChassisController.class)
-public class ChassisControllerTest {
+class ChassisControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -38,7 +41,7 @@ public class ChassisControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    public void testGetAllChassis() throws Exception {
+    void testGetAllChassis() throws Exception {
         // given
         when(chassisService.retrieveAllChassis())
                 .thenReturn(List.of(
@@ -52,7 +55,7 @@ public class ChassisControllerTest {
     }
 
     @Test
-    public void testGetChassisById() throws Exception {
+    void testGetChassisById() throws Exception {
         ChassisEntity chassisEntity = new ChassisEntity(5L,"name 5","description 5");
         when(chassisService.retriveChassisById(5L)).thenReturn(chassisEntity);
         String url = "/v1/chassis/5";
@@ -60,7 +63,7 @@ public class ChassisControllerTest {
     }
 
     @Test
-    public void getChassisByName() throws Exception {
+    void getChassisByName() throws Exception {
         List<ChassisEntity> chassisEntityList = new ArrayList<>();
         chassisEntityList.add(new ChassisEntity(1L,"name","description 1"));
         chassisEntityList.add(new ChassisEntity(2L,"name","description 2"));
@@ -71,7 +74,7 @@ public class ChassisControllerTest {
     }
 
     @Test
-    public void testCreate() throws Exception {
+    void testCreate() throws Exception {
         ChassisEntity chassisEntity = new ChassisEntity(6L,"name 6","description 6");
         ChassisDTO chassisDTO = new ChassisDTO("name 6","description 6");
         when(chassisService.addChassis(chassisDTO)).thenReturn(chassisEntity);
@@ -80,6 +83,17 @@ public class ChassisControllerTest {
     }
 
     @Test
-    public void testDeleteChassis() {
+    void testDeleteChassis() {
+        // given
+        // ToDo: This is just a exception test example it have to be replaced by a real method test
+        when(chassisService.retrieveAllChassis())
+                .thenThrow(IllegalArgumentException.class);
+
+        // when
+        ThrowingCallable methodUnderTest = () -> chassisService.retrieveAllChassis();
+
+        // then
+        BDDAssertions.thenThrownBy(methodUnderTest)
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
