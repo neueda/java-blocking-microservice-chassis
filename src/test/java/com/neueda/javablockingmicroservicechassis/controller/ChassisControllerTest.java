@@ -7,6 +7,7 @@ import com.neueda.javablockingmicroservicechassis.entity.ChassisEntity;
 import com.neueda.javablockingmicroservicechassis.exception.ChassisEntityNotFoundException;
 import com.neueda.javablockingmicroservicechassis.repository.ChassisRepository;
 import com.neueda.javablockingmicroservicechassis.service.ChassisService;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.assertj.core.api.BDDAssertions;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,7 @@ import java.util.List;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ChassisController.class)
@@ -84,14 +86,25 @@ class ChassisControllerTest {
     @Test
     void testGetChassisByName() throws Exception {
         //given
-        String name = "name";
-        when(chassisService.searchChassisByName(name)).thenReturn(List.of(
-                new ChassisEntity(1L,"name","description 1"),
-                new ChassisEntity(2L,"name","description 2")));
+        final String name = RandomStringUtils.randomAlphabetic(5);
+        final String description1 = RandomStringUtils.randomAlphabetic(6);
+        final String description2 = RandomStringUtils.randomAlphabetic(7);
+
+        when(chassisService.searchChassisByName(name))
+            .thenReturn(List.of(
+                new ChassisEntity(1L, name, description1),
+                new ChassisEntity(2L, name, description2)
+            ));
+
+        final ChassisDTO chassisDto1 = new ChassisDTO(name, description1);
+        final ChassisDTO chassisDto2 = new ChassisDTO(name, description2);
+        final List<ChassisDTO> expected = List.of(chassisDto1, chassisDto2);
+
         //when
-        mockMvc.perform(get("/v1/chassisSearch/name"))
-                //then
-                .andExpect(status().isOk());
+        mockMvc.perform(get("/v1/chassisSearch/" + name))
+            //then
+            .andExpect(status().isOk())
+            .andExpect(content().json(objectMapper.writeValueAsString(expected)));
     }
 
     @Test
