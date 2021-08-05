@@ -43,14 +43,21 @@ class ChassisControllerTest {
     @Test
     void testGetAllChassis() throws Exception {
         // given
+        final String name = RandomStringUtils.randomAlphabetic(5);
+        final String description1 = RandomStringUtils.randomAlphabetic(6);
+        final String description2 = RandomStringUtils.randomAlphabetic(7);
         when(chassisService.retrieveAllChassis())
                 .thenReturn(List.of(
-                        new ChassisEntity(1L,"name 1","description 1"),
-                        new ChassisEntity(2L,"name 2","description 2")));
+                        new ChassisEntity(1L,name,description1),
+                        new ChassisEntity(2L,name,description2)));
+        final ChassisDTO chassisDto1 = new ChassisDTO(name, description1);
+        final ChassisDTO chassisDto2 = new ChassisDTO(name, description2);
+        final List<ChassisDTO> expected = List.of(chassisDto1, chassisDto2);
         // when
         mockMvc.perform(get("/v1/chassis"))
                 // then
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(expected)));
     }
 
     @Test
