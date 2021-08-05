@@ -73,11 +73,15 @@ class ChassisControllerTest {
     @Test
     void testGetChassisById() throws Exception {
         //given
-        when(chassisService.retriveChassisById(5L)).thenReturn(new ChassisEntity(5L,"name 5","description 5"));
+        final String name = RandomStringUtils.randomAlphabetic(5);
+        final String description = RandomStringUtils.randomAlphabetic(6);
+        when(chassisService.retriveChassisById(5L)).thenReturn(new ChassisEntity(5L,name,description));
+        final ChassisDTO expected = new ChassisDTO(name, description);
         //when
         mockMvc.perform(get("/v1/chassis/5"))
                 //then
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(expected)));
     }
 
     @Test
