@@ -1,8 +1,6 @@
 spring:
   main:
     banner-mode: log
-  config:
-    import: "configtree:db/"
 
   application:
     name: @project.artifactId@
@@ -17,15 +15,15 @@ spring:
 
   liquibase:
     change-log: "classpath:/db/changelog/db.changelog-master.xml"
-    url: jdbc:${liquibase.database}
-    user: ${liquibase.username:sa}
-    password: ${liquibase.password}
+    url: jdbc:h2:mem:chassisdb
+    user: sa
+    password:
     test-rollback-on-update: on
 
   datasource:
-    url: jdbc:${app.database}
-    username: ${app.username:sa}
-    password: ${app.password}
+    url: jdbc:h2:mem:chassisdb
+    username: sa
+    password:
     driverClassName: org.h2.Driver
 
   jpa:
