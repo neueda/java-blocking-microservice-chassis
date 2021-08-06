@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.neueda.java-blocking-microservice-chassis</groupId>
-	<artifactId>com.neueda.java-blocking-microservice-chassis</artifactId>
+	<artifactId>java-blocking-microservice-chassis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Java-blocking-Microservice-Chassis</name>
 	<description>Demo project for Spring Microservice Chassis</description>
