@@ -11,7 +11,7 @@
 	<groupId>com.neueda.java-blocking-microservice-chassis</groupId>
 	<artifactId>java-blocking-microservice-chassis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Java-blocking-Microservice-Chassis</name>
+	<name>Java Blocking Microservice Chassis</name>
 	<description>Demo project for Spring Microservice Chassis</description>
 	<properties>
 		<java.version>16</java.version>
