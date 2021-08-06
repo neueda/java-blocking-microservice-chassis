@@ -1,4 +1,4 @@
-package com.neueda.javablockingmicroservicechassis;
+package com.neueda.blocking.chassis;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

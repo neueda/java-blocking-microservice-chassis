@@ -1,15 +1,13 @@
-package com.neueda.javablockingmicroservicechassis.controller;
+package com.neueda.blocking.chassis.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.neueda.javablockingmicroservicechassis.dto.ChassisDTO;
-import com.neueda.javablockingmicroservicechassis.entity.ChassisEntity;
-import com.neueda.javablockingmicroservicechassis.exception.ChassisEntityNotFoundException;
-import com.neueda.javablockingmicroservicechassis.repository.ChassisRepository;
-import com.neueda.javablockingmicroservicechassis.service.ChassisService;
+import com.neueda.blocking.chassis.model.ChassisDTO;
+import com.neueda.blocking.chassis.entity.ChassisEntity;
+import com.neueda.blocking.chassis.exception.ChassisEntityNotFoundException;
+import com.neueda.blocking.chassis.repository.ChassisRepository;
+import com.neueda.blocking.chassis.service.ChassisService;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.assertj.core.api.BDDAssertions;
-import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -26,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ChassisController.class)
-class ChassisControllerTest {
+class ChassisControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -42,6 +40,7 @@ class ChassisControllerTest {
 
     @Test
     void testGetAllChassis() throws Exception {
+
         // given
         final String name = RandomStringUtils.randomAlphabetic(5);
         final String description1 = RandomStringUtils.randomAlphabetic(6);
@@ -53,8 +52,10 @@ class ChassisControllerTest {
         final ChassisDTO chassisDto1 = new ChassisDTO(name, description1);
         final ChassisDTO chassisDto2 = new ChassisDTO(name, description2);
         final List<ChassisDTO> expected = List.of(chassisDto1, chassisDto2);
+
         // when
         mockMvc.perform(get("/v1/chassis"))
+
                 // then
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(expected)));
@@ -62,23 +63,29 @@ class ChassisControllerTest {
 
     @Test
     void testGetAllChassis_EntityNotFound() throws Exception {
+
         //given
         when(chassisService.retrieveAllChassis()).thenThrow(new ChassisEntityNotFoundException(""));
+
         //when
         mockMvc.perform(get("/v1/chassis"))
+
                 //then
                 .andExpect(status().isNotFound());
     }
 
     @Test
     void testGetChassisById() throws Exception {
+
         //given
         final String name = RandomStringUtils.randomAlphabetic(5);
         final String description = RandomStringUtils.randomAlphabetic(6);
         when(chassisService.retriveChassisById(5L)).thenReturn(new ChassisEntity(5L,name,description));
         final ChassisDTO expected = new ChassisDTO(name, description);
+
         //when
         mockMvc.perform(get("/v1/chassis/5"))
+
                 //then
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(expected)));
@@ -86,16 +93,20 @@ class ChassisControllerTest {
 
     @Test
     void testGetChassisById_EntityNotFound() throws Exception {
+
         //given
         when(chassisService.retriveChassisById(5L)).thenThrow(new ChassisEntityNotFoundException(""));
+
         //when
         mockMvc.perform(get("/v1/chassis/5"))
+
                 //then
                 .andExpect(status().isNotFound());
     }
 
     @Test
     void testGetChassisByName() throws Exception {
+
         //given
         final String name = RandomStringUtils.randomAlphabetic(5);
         final String description1 = RandomStringUtils.randomAlphabetic(6);
@@ -113,6 +124,7 @@ class ChassisControllerTest {
 
         //when
         mockMvc.perform(get("/v1/chassisSearch/" + name))
+
             //then
             .andExpect(status().isOk())
             .andExpect(content().json(objectMapper.writeValueAsString(expected)));
@@ -120,35 +132,44 @@ class ChassisControllerTest {
 
     @Test
     void testGetChassisByName_EntityNotFound() throws Exception {
+
         //given
         String name = "name";
         when(chassisService.searchChassisByName(name)).thenThrow(new ChassisEntityNotFoundException(""));
+
         //when
         mockMvc.perform(get("/v1/chassisSearch/name"))
+
                 //then
                 .andExpect(status().isNotFound());
     }
 
     @Test
     void testCreate() throws Exception {
+
         //given
         ChassisDTO chassisDTO = new ChassisDTO("name 6","description 6");
         when(chassisService.addChassis(new ChassisDTO("name 6","description 6"))).thenReturn( new ChassisEntity(6L,"name 6","description 6"));
+
         //when
         mockMvc.perform(post("/v1/chassis")
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(chassisDTO)))
+
                 //then
                 .andExpect(status().isCreated());
     }
 
     @Test
     void testDeleteChassis() throws Exception {
+
         //given
         ChassisEntity chassisEntity = new ChassisEntity(6L, "name 6", "description 6");
         doNothing().when(chassisService).deleteChassis(chassisEntity.getId());
+
         //when
         mockMvc.perform(delete("/v1/chassis/6").contentType(MediaType.APPLICATION_JSON))
+
                 //then
                 .andExpect(status().isNoContent());
     }

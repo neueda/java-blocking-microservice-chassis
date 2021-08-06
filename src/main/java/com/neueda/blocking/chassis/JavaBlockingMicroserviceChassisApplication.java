@@ -1,4 +1,4 @@
-package com.neueda.javablockingmicroservicechassis;
+package com.neueda.blocking.chassis;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

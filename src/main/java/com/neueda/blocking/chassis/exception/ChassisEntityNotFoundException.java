@@ -1,4 +1,4 @@
-package com.neueda.javablockingmicroservicechassis.exception;
+package com.neueda.blocking.chassis.exception;
 
 public class ChassisEntityNotFoundException extends RuntimeException {
 

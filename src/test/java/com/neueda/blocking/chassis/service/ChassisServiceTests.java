@@ -1,36 +1,30 @@
-package com.neueda.javablockingmicroservicechassis.service;
+package com.neueda.blocking.chassis.service;
 
-import com.neueda.javablockingmicroservicechassis.dto.ChassisDTO;
-import com.neueda.javablockingmicroservicechassis.entity.ChassisEntity;
-import com.neueda.javablockingmicroservicechassis.repository.ChassisRepository;
+import com.neueda.blocking.chassis.model.ChassisDTO;
+import com.neueda.blocking.chassis.entity.ChassisEntity;
+import com.neueda.blocking.chassis.repository.ChassisRepository;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.assertj.core.api.BDDAssertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.servlet.MockMvc;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
-class ChassisServiceTest {
+@SpringJUnitConfig
+class ChassisServiceTests {
 
     @Mock
     private ChassisRepository chassisRepository;
-
-    @Autowired
-    private MockMvc mockMvc;
 
     @InjectMocks
     private ChassisService chassisService;
 
     @Test
-    void retrieveAllChassis()
+    void testRetrieveAllChassis()
     {
         //Given
         List<ChassisEntity> chassisEntity = List.of(
@@ -38,27 +32,30 @@ class ChassisServiceTest {
                             new ChassisEntity(2L,"name","description 2"));
         when(chassisRepository.findAll())
                 .thenReturn(chassisEntity);
+
         //when
-        assertThat(chassisService.retrieveAllChassis())
+        BDDAssertions.assertThat(chassisService.retrieveAllChassis())
+
                 //then
                 .isEqualTo(chassisEntity);
     }
 
     @Test
-    void retreiveChassisById() throws Exception
+    void testRetrieveChassisById() throws Exception
     {
         //Given
         ChassisEntity chassis = new ChassisEntity(5L,"name","description 1");
         Mockito.when(chassisRepository.findById(5L)).thenReturn(java.util.Optional.of(chassis));
 
         //when
-        assertThat(chassisService.retriveChassisById(5L))
+        BDDAssertions.assertThat(chassisService.retriveChassisById(5L))
+
                 //then
                 .isEqualTo(chassis);
     }
 
     @Test
-    void searchChassisByName() throws Exception
+    void testSearchChassisByName() throws Exception
     {
         //Given
         final String name = RandomStringUtils.randomAlphabetic(5);
@@ -76,13 +73,14 @@ class ChassisServiceTest {
         final List<ChassisDTO> expected = List.of(chassisDto1, chassisDto2);
 
         //when
-        assertThat(chassisService.searchChassisByName(name)).usingElementComparatorIgnoringFields("id")
+        BDDAssertions.assertThat(chassisService.searchChassisByName(name)).usingElementComparatorIgnoringFields("id")
+
                 //then
                 .isEqualTo(expected);
     }
 
     @Test
-    void addChassis()
+    void testAddChassis()
     {
         //Given
         ChassisEntity chassis = new ChassisEntity();
@@ -93,13 +91,14 @@ class ChassisServiceTest {
         when(chassisRepository.save(chassis)).thenReturn(chassis);
 
         //when
-        assertThat(chassisService.addChassis(chassis_dto))
+        BDDAssertions.assertThat(chassisService.addChassis(chassis_dto))
+
                 //then
                 .isEqualTo(chassis);
     }
 
     @Test
-    void deleteChassis() throws Exception
+    void testDeleteChassis() throws Exception
     {
         //Given
         ChassisEntity chassis = new ChassisEntity(1L,"name","description ");

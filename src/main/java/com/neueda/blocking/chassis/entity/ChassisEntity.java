@@ -1,4 +1,4 @@
-package com.neueda.javablockingmicroservicechassis.entity;
+package com.neueda.blocking.chassis.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,6 @@
-package com.neueda.javablockingmicroservicechassis.repository;
+package com.neueda.blocking.chassis.repository;
 
-import com.neueda.javablockingmicroservicechassis.entity.ChassisEntity;
+import com.neueda.blocking.chassis.entity.ChassisEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

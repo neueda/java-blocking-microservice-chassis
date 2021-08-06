@@ -1,9 +1,9 @@
-package com.neueda.javablockingmicroservicechassis.controller;
+package com.neueda.blocking.chassis.controller;
 
-import com.neueda.javablockingmicroservicechassis.dto.ChassisDTO;
-import com.neueda.javablockingmicroservicechassis.entity.ChassisEntity;
-import com.neueda.javablockingmicroservicechassis.exception.ChassisEntityNotFoundException;
-import com.neueda.javablockingmicroservicechassis.service.ChassisService;
+import com.neueda.blocking.chassis.model.ChassisDTO;
+import com.neueda.blocking.chassis.entity.ChassisEntity;
+import com.neueda.blocking.chassis.exception.ChassisEntityNotFoundException;
+import com.neueda.blocking.chassis.service.ChassisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

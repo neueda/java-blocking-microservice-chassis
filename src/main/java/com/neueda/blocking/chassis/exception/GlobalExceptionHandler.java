@@ -1,4 +1,4 @@
-package com.neueda.javablockingmicroservicechassis.exception;
+package com.neueda.blocking.chassis.exception;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
