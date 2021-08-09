@@ -1,6 +1,6 @@
 package com.neueda.blocking.chassis.service;
 
-import com.neueda.blocking.chassis.model.ChassisDTO;
+import com.neueda.blocking.chassis.model.Chassis;
 import com.neueda.blocking.chassis.entity.ChassisEntity;
 import com.neueda.blocking.chassis.repository.ChassisRepository;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -36,7 +36,7 @@ class ChassisServiceTests {
                 .thenReturn(chassisEntity);
 
         //when
-        BDDAssertions.assertThat(chassisService.retrieveAllChassis())
+        BDDAssertions.then(chassisService.retrieveAllChassis())
 
                 //then
                 .isEqualTo(chassisEntity);
@@ -51,7 +51,7 @@ class ChassisServiceTests {
         Mockito.when(chassisRepository.findById(5L)).thenReturn(java.util.Optional.of(chassis));
 
         //when
-        BDDAssertions.assertThat(chassisService.retriveChassisById(5L))
+        BDDAssertions.then(chassisService.retriveChassisById(5L))
 
                 //then
                 .isEqualTo(chassis);
@@ -72,12 +72,12 @@ class ChassisServiceTests {
                         new ChassisEntity(2L, name, description2)
                 ));
 
-        final ChassisDTO chassisDto1 = new ChassisDTO(name, description1);
-        final ChassisDTO chassisDto2 = new ChassisDTO(name, description2);
-        final List<ChassisDTO> expected = List.of(chassisDto1, chassisDto2);
+        final Chassis chassisDto1 = new Chassis(name, description1);
+        final Chassis chassisDto2 = new Chassis(name, description2);
+        final List<Chassis> expected = List.of(chassisDto1, chassisDto2);
 
         //when
-        BDDAssertions.assertThat(chassisService.searchChassisByName(name)).usingElementComparatorIgnoringFields("id")
+        BDDAssertions.then(chassisService.searchChassisByName(name)).usingElementComparatorIgnoringFields("id")
 
                 //then
                 .isEqualTo(expected);
@@ -91,12 +91,12 @@ class ChassisServiceTests {
         ChassisEntity chassis = new ChassisEntity();
         chassis.setName("name");
         chassis.setDescription("description");
-        ChassisDTO chassis_dto = new ChassisDTO("name","description");
+        Chassis chassis_dto = new Chassis("name","description");
 
         when(chassisRepository.save(chassis)).thenReturn(chassis);
 
         //when
-        BDDAssertions.assertThat(chassisService.addChassis(chassis_dto))
+        BDDAssertions.then(chassisService.addChassis(chassis_dto))
 
                 //then
                 .isEqualTo(chassis);

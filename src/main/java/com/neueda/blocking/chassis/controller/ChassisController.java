@@ -1,19 +1,12 @@
 package com.neueda.blocking.chassis.controller;
 
-import com.neueda.blocking.chassis.model.ChassisDTO;
+import com.neueda.blocking.chassis.model.Chassis;
 import com.neueda.blocking.chassis.entity.ChassisEntity;
 import com.neueda.blocking.chassis.exception.ChassisEntityNotFoundException;
 import com.neueda.blocking.chassis.service.ChassisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
@@ -23,37 +16,35 @@ import java.util.List;
 public class ChassisController {
 
     private final ChassisService chassisService;
+
     @GetMapping("/chassis")
-    public ResponseEntity<?> getAllChassis(){
-        List<ChassisEntity> chassisEntities = chassisService.retrieveAllChassis();
-        if(chassisEntities.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(chassisEntities, HttpStatus.OK);
+    public List<ChassisEntity> getAllChassis()
+    {
+        return chassisService.retrieveAllChassis();
     }
 
     @GetMapping("/chassis/{id}")
-    public ResponseEntity<?> getChassisById(@PathVariable String id) throws ChassisEntityNotFoundException {
-        ChassisEntity chassis = chassisService.retriveChassisById(Long.valueOf(id));
-        return new ResponseEntity<>(chassis, HttpStatus.OK);
+    public ChassisEntity getChassisById(@PathVariable String id) throws ChassisEntityNotFoundException
+    {
+        return chassisService.retriveChassisById(Long.valueOf(id));
     }
 
     @GetMapping("/chassisSearch/{name}")
-    public ResponseEntity<?> getChassisByName(@PathVariable String name) throws ChassisEntityNotFoundException{
-        List<ChassisEntity> chassisEntities = chassisService.searchChassisByName(name);
-        return new ResponseEntity<>(chassisEntities, HttpStatus.OK);
+    public List<ChassisEntity> getChassisByName(@PathVariable String name) throws ChassisEntityNotFoundException
+    {
+        return chassisService.searchChassisByName(name);
     }
 
     @PostMapping("/chassis")
-    public ResponseEntity<?> create(@RequestBody ChassisDTO chassisDTO){
-        ChassisEntity chassis = chassisService.addChassis(chassisDTO);
-        return new ResponseEntity<>(chassis, HttpStatus.CREATED);
+    @ResponseStatus(HttpStatus.CREATED)
+    public ChassisEntity create(@RequestBody Chassis chassis)
+    {
+        return chassisService.addChassis(chassis);
     }
 
     @DeleteMapping({"/chassis/{id}"})
-    public ResponseEntity<?> deleteChassis(@PathVariable("id") String id) throws ChassisEntityNotFoundException{
+    public void deleteChassis(@PathVariable("id") String id) throws ChassisEntityNotFoundException
+    {
         chassisService.deleteChassis(Long.valueOf(id));
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 }
