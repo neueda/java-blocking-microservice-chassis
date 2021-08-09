@@ -20,7 +20,7 @@ spring:
     test-rollback-on-update: on
 
   datasource:
-    url: jdbc:${app.database}
+    url: ${app.database}
     username: ${app.username:sa}
     password: ${app.password}
     driverClassName: org.h2.Driver
@@ -45,10 +45,10 @@ springdoc:
     enabled: on
     path: /api-docs
 
-apidoc:
-  title: @project.name@
-  description: @project.description@
-  version: @project.version@
+#apidoc:
+#  title: @project.name@
+#  description: @project.description@
+#  version: @project.version@
 
 debug: off
 trace: off
@@ -64,6 +64,3 @@ logging:
         jdbc:
           datasource: trace
 
-data:
-  exception:
-    message1: ChassisEntityNotFound
