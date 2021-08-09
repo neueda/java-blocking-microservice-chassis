@@ -22,14 +22,7 @@ import java.util.List;
 @RequestMapping("/v1")
 public class ChassisController {
 
-
     private final ChassisService chassisService;
-
-//    public ChassisController(ChassisService chassisService) {
-//        this.chassisService = chassisService;
-//    }
-
-
     @GetMapping("/chassis")
     public ResponseEntity<?> getAllChassis(){
         List<ChassisEntity> chassisEntities = chassisService.retrieveAllChassis();
