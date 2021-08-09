@@ -2,13 +2,15 @@ package com.neueda.blocking.chassis.exception;
 
 public class ChassisEntityNotFoundException extends RuntimeException {
 
-    private String message;
+    private final String path;
 
-    public ChassisEntityNotFoundException(String message) {
+    public ChassisEntityNotFoundException(String path, String message) {
         super(message);
-        this.message = message;
+        this.path = path;
     }
 
-    public ChassisEntityNotFoundException() {
+    public String getPath() {
+        return path;
     }
+
 }
