@@ -2,6 +2,7 @@ package com.neueda.blocking.chassis.repository;
 
 import com.neueda.blocking.chassis.entity.ChassisEntity;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -17,6 +18,7 @@ class ChassisRepositoryTest {
     ChassisRepository underTest;
 
     @Test
+    @DisplayName("Testing method search by name")
     void shouldFindByName() {
         //given
         final String name = RandomStringUtils.randomAlphabetic(5);
@@ -37,6 +39,7 @@ class ChassisRepositoryTest {
     }
 
     @Test
+    @DisplayName("Testing method search not found by name")
     void shouldNotFindByName() {
         //given
         final String name = RandomStringUtils.randomAlphabetic(5);

@@ -5,6 +5,7 @@ import com.neueda.blocking.chassis.entity.ChassisEntity;
 import com.neueda.blocking.chassis.repository.ChassisRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.assertj.core.api.BDDAssertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -24,6 +25,7 @@ class ChassisServiceTests {
     private ChassisService chassisService;
 
     @Test
+    @DisplayName("Testing to retrive all the chassis")
     void testRetrieveAllChassis()
     {
         //Given
@@ -41,6 +43,7 @@ class ChassisServiceTests {
     }
 
     @Test
+    @DisplayName("Testing search method by ID")
     void testRetrieveChassisById() throws Exception
     {
         //Given
@@ -55,6 +58,7 @@ class ChassisServiceTests {
     }
 
     @Test
+    @DisplayName("Testing serch method by name")
     void testSearchChassisByName() throws Exception
     {
         //Given
@@ -80,6 +84,7 @@ class ChassisServiceTests {
     }
 
     @Test
+    @DisplayName("Testing for add method")
     void testAddChassis()
     {
         //Given
@@ -98,6 +103,7 @@ class ChassisServiceTests {
     }
 
     @Test
+    @DisplayName("Testing for delete method")
     void testDeleteChassis() throws Exception
     {
         //Given

@@ -8,6 +8,7 @@ import com.neueda.blocking.chassis.model.ChassisDTO;
 import com.neueda.blocking.chassis.repository.ChassisRepository;
 import com.neueda.blocking.chassis.service.ChassisService;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -39,6 +40,7 @@ class ChassisControllerTests {
     private ObjectMapper objectMapper;
 
     @Test
+    @DisplayName("testing get method to get all values")
     void testGetAllChassis() throws Exception {
         final String name = RandomStringUtils.randomAlphabetic(5);
         final String description1 = RandomStringUtils.randomAlphabetic(6);
@@ -68,6 +70,7 @@ class ChassisControllerTests {
     }
 
     @Test
+    @DisplayName("Testing get values by Id method")
     void testGetChassisById() throws Exception {
 
         final String name = RandomStringUtils.randomAlphabetic(5);
@@ -81,6 +84,7 @@ class ChassisControllerTests {
     }
 
     @Test
+    @DisplayName("Testing get value by id not found method")
     void testGetChassisById_EntityNotFound() throws Exception {
         when(chassisService.retriveChassisById(5L)).thenThrow(new ChassisEntityNotFoundException(""));
         mockMvc.perform(get("/v1/chassis/5"))
@@ -88,6 +92,7 @@ class ChassisControllerTests {
     }
 
     @Test
+    @DisplayName("Testing get values by name method")
     void testGetChassisByName() throws Exception {
         final String name = RandomStringUtils.randomAlphabetic(5);
         final String description1 = RandomStringUtils.randomAlphabetic(6);
@@ -109,6 +114,7 @@ class ChassisControllerTests {
     }
 
     @Test
+    @DisplayName("Testing get by name not found ")
     void testGetChassisByName_EntityNotFound() throws Exception {
 
         String name = "name";
@@ -118,6 +124,7 @@ class ChassisControllerTests {
     }
 
     @Test
+    @DisplayName("Testing create method")
     void testCreate() throws Exception {
 
         ChassisDTO chassisDTO = new ChassisDTO("name 6","description 6");
@@ -129,6 +136,7 @@ class ChassisControllerTests {
     }
 
     @Test
+    @DisplayName("Testing Delete method")
     void testDeleteChassis() throws Exception {
         ChassisEntity chassisEntity = new ChassisEntity(6L, "name 6", "description 6");
         doNothing().when(chassisService).deleteChassis(chassisEntity.getId());
