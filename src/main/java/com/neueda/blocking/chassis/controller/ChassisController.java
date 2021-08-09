@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 @RequiredArgsConstructor
 @RestController
@@ -25,7 +24,7 @@ public class ChassisController {
     }
 
     @GetMapping("/chassis/{id}")
-    public ChassisEntity getChassisById(@PathVariable String id) throws EntityNotFoundException
+    public ChassisEntity getChassisById(@PathVariable String id) throws ChassisEntityNotFoundException
     {
         return chassisService.retriveChassisById(Long.valueOf(id));
     }
@@ -33,7 +32,6 @@ public class ChassisController {
     @GetMapping("/chassisSearch/{name}")
     public List<ChassisEntity> getChassisByName(@PathVariable String name) throws ChassisEntityNotFoundException
     {
-
         return chassisService.searchChassisByName(name);
     }
 
