@@ -1,11 +1,6 @@
 spring:
   main:
-    banner-mode: log
-  config:
-    import: "configtree:db/"
-
-  application:
-    name: @project.artifactId@
+    banner-mode: off
 
   h2:
     console:
@@ -16,45 +11,45 @@ spring:
       mode: never
 
   liquibase:
+    enabled: false
     change-log: "classpath:/db/changelog/db.changelog-master.xml"
     test-rollback-on-update: on
 
   datasource:
-    url: jdbc:${app.database}
-    username: ${app.username:sa}
-    password: ${app.password}
+    url: jdbc:h2:mem:chassisdb
+    username: sa
+    password: sa
     driverClassName: org.h2.Driver
 
   jpa:
     show-sql: true
     generate-ddl: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: create-drop
 
   codec:
     log-request-details: on
 
 server:
-  port: 8080
   error:
     include-exception: on
     include-stacktrace: always
 
+client:
+  base-url: https://mock.server.com
+
 springdoc:
   api-docs:
-    enabled: on
-    path: /api-docs
+    enabled: off
 
 apidoc:
-  title: @project.name@
-  description: @project.description@
-  version: @project.version@
+  title: Java Blocking Microservice Test
+  description: Microservice Test for Blocking Restful API with Spring Boot
+  version: Test
 
 debug: off
 trace: off
 logging:
-  file:
-    path: /var/log/@build.name@
   level:
     root: error
     web: trace
@@ -63,6 +58,8 @@ logging:
       springframework:
         jdbc:
           datasource: trace
+    liquibase:
+      database: trace
 
 data:
   exception:
