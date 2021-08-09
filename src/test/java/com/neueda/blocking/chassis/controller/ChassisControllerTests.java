@@ -4,7 +4,7 @@ package com.neueda.blocking.chassis.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.neueda.blocking.chassis.entity.ChassisEntity;
 import com.neueda.blocking.chassis.exception.ChassisEntityNotFoundException;
-import com.neueda.blocking.chassis.model.ChassisDTO;
+import com.neueda.blocking.chassis.model.Chassis;
 import com.neueda.blocking.chassis.repository.ChassisRepository;
 import com.neueda.blocking.chassis.service.ChassisService;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -49,9 +49,9 @@ class ChassisControllerTests {
                 .thenReturn(List.of(
                         new ChassisEntity(1L,name,description1),
                         new ChassisEntity(2L,name,description2)));
-        final ChassisDTO chassisDto1 = new ChassisDTO(name, description1);
-        final ChassisDTO chassisDto2 = new ChassisDTO(name, description2);
-        final List<ChassisDTO> expected = List.of(chassisDto1, chassisDto2);
+        final Chassis chassis1 = new Chassis(name, description1);
+        final Chassis chassis2 = new Chassis(name, description2);
+        final List<Chassis> expected = List.of(chassis1, chassis2);
 
         mockMvc.perform(get("/v1/chassis"))
 
@@ -62,7 +62,7 @@ class ChassisControllerTests {
     @Test
     void testGetAllChassis_EntityNotFound() throws Exception {
 
-        when(chassisService.retrieveAllChassis()).thenThrow(new ChassisEntityNotFoundException(""));
+        when(chassisService.retrieveAllChassis()).thenThrow(new ChassisEntityNotFoundException("",""));
 
         mockMvc.perform(get("/v1/chassis"))
 
@@ -76,7 +76,7 @@ class ChassisControllerTests {
         final String name = RandomStringUtils.randomAlphabetic(5);
         final String description = RandomStringUtils.randomAlphabetic(6);
         when(chassisService.retriveChassisById(5L)).thenReturn(new ChassisEntity(5L,name,description));
-        final ChassisDTO expected = new ChassisDTO(name, description);
+        final Chassis expected = new Chassis(name, description);
 
         mockMvc.perform(get("/v1/chassis/5"))
                 .andExpect(status().isOk())
@@ -86,7 +86,7 @@ class ChassisControllerTests {
     @Test
     @DisplayName("Testing get value by id not found method")
     void testGetChassisById_EntityNotFound() throws Exception {
-        when(chassisService.retriveChassisById(5L)).thenThrow(new ChassisEntityNotFoundException(""));
+        when(chassisService.retriveChassisById(5L)).thenThrow(new ChassisEntityNotFoundException("",""));
         mockMvc.perform(get("/v1/chassis/5"))
                 .andExpect(status().isNotFound());
     }
@@ -104,9 +104,9 @@ class ChassisControllerTests {
                 new ChassisEntity(2L, name, description2)
             ));
 
-        final ChassisDTO chassisDto1 = new ChassisDTO(name, description1);
-        final ChassisDTO chassisDto2 = new ChassisDTO(name, description2);
-        final List<ChassisDTO> expected = List.of(chassisDto1, chassisDto2);
+        final Chassis chassis1 = new Chassis(name, description1);
+        final Chassis chassis2 = new Chassis(name, description2);
+        final List<Chassis> expected = List.of(chassis1, chassis2);
         mockMvc.perform(get("/v1/chassisSearch/" + name))
 
             .andExpect(status().isOk())
@@ -118,7 +118,7 @@ class ChassisControllerTests {
     void testGetChassisByName_EntityNotFound() throws Exception {
 
         String name = "name";
-        when(chassisService.searchChassisByName(name)).thenThrow(new ChassisEntityNotFoundException(""));
+        when(chassisService.searchChassisByName(name)).thenThrow(new ChassisEntityNotFoundException("",""));
         mockMvc.perform(get("/v1/chassisSearch/name"))
                 .andExpect(status().isNotFound());
     }
@@ -127,8 +127,8 @@ class ChassisControllerTests {
     @DisplayName("Testing create method")
     void testCreate() throws Exception {
 
-        ChassisDTO chassisDTO = new ChassisDTO("name 6","description 6");
-        when(chassisService.addChassis(new ChassisDTO("name 6","description 6"))).thenReturn( new ChassisEntity(6L,"name 6","description 6"));
+        Chassis chassisDTO = new Chassis("name 6","description 6");
+        when(chassisService.addChassis(new Chassis("name 6","description 6"))).thenReturn( new ChassisEntity(6L,"name 6","description 6"));
         mockMvc.perform(post("/v1/chassis")
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(chassisDTO)))
