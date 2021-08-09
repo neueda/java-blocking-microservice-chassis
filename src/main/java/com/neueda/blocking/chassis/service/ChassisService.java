@@ -11,7 +11,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class ChassisService {
-
     private final ChassisRepository chassisRepository;
 
     public List<ChassisEntity> retrieveAllChassis() {
@@ -19,23 +18,30 @@ public class ChassisService {
     }
 
     public ChassisEntity retriveChassisById(Long id) throws ChassisEntityNotFoundException {
+        if (chassisRepository.findById(id).isEmpty()) {
+            throw new ChassisEntityNotFoundException("/v1/chassis", "No Chassis Found");
+        }
         return chassisRepository.findById(id).get();
     }
 
-    public List<ChassisEntity> searchChassisByName(String name) throws ChassisEntityNotFoundException{
+    public List<ChassisEntity> searchChassisByName(String name) throws ChassisEntityNotFoundException {
+        if (chassisRepository.findByName(name).isEmpty()) {
+            throw new ChassisEntityNotFoundException("/v1/chassisSearch/{name}", "No Chassis With The Name");
+        }
         return chassisRepository.findByName(name);
     }
 
-    public ChassisEntity addChassis(Chassis chassis){
+    public ChassisEntity addChassis(Chassis chassisDTO) {
         ChassisEntity chassisEntity = new ChassisEntity();
-        chassisEntity.setName(chassis.getName());
-        chassisEntity.setDescription(chassis.getDescription());
+        chassisEntity.setName(chassisDTO.getName());
+        chassisEntity.setDescription(chassisDTO.getDescription());
         return chassisRepository.save(chassisEntity);
     }
 
-    public void deleteChassis(Long id) throws ChassisEntityNotFoundException{
+    public void deleteChassis(Long id) throws ChassisEntityNotFoundException {
+        if (chassisRepository.findById(id).isEmpty()) {
+            throw new ChassisEntityNotFoundException("/v1//chassis/{id}", "Chassis Not Found");
+        }
         chassisRepository.deleteById(id);
     }
-
-
 }
