@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Slf4j
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(IdFormatException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    private ErrorResponse handleNumberFormatError(IdFormatException ex) {
+        return logAndRespond(ex, ex.getPath());
+    }
+
     @ExceptionHandler(ChassisEntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     private ErrorResponse handleChassisEntityNotFoundException(ChassisEntityNotFoundException ex) {

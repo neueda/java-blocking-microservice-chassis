@@ -1,5 +1,6 @@
 package com.neueda.blocking.chassis.controller;
 
+import com.neueda.blocking.chassis.exception.IdFormatException;
 import com.neueda.blocking.chassis.model.Chassis;
 import com.neueda.blocking.chassis.entity.ChassisEntity;
 import com.neueda.blocking.chassis.exception.ChassisEntityNotFoundException;
@@ -24,7 +25,12 @@ public class ChassisController {
 
     @GetMapping("/chassis/{id}")
     public ChassisEntity getChassisById(@PathVariable String id) {
+        try{
         return chassisService.retrieveChassisById(Long.valueOf(id));
+        }
+        catch(NumberFormatException ex) {
+            throw new IdFormatException("/v1/chassis/" + id, ex);
+        }
     }
 
     @GetMapping("/chassisSearch/{name}")
