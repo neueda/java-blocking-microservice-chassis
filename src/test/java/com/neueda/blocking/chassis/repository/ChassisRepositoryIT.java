@@ -2,6 +2,7 @@ package com.neueda.blocking.chassis.repository;
 
 import com.neueda.blocking.chassis.entity.ChassisEntity;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.assertj.core.api.BDDAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,17 +29,17 @@ class ChassisRepositoryIT {
         final String description1 = RandomStringUtils.randomAlphabetic(6);
         final String description2 = RandomStringUtils.randomAlphabetic(7);
 
-        List<ChassisEntity> expected = (List.of(
+        List<ChassisEntity> chassisEntityList = List.of(
                 new ChassisEntity(2L,name,description1),
-                new ChassisEntity(3L,name,description2)));
+                new ChassisEntity(3L,name,description2));
 
-        underTest.saveAll(expected);
+        List<ChassisEntity> expected = underTest.saveAll(chassisEntityList);
 
         //when
         List<ChassisEntity> result = underTest.findByName(name);
 
         //then
-        assertThat(result).isEqualTo(expected);
+        BDDAssertions.then((result).equals(expected));
     }
 
     @Test
@@ -59,7 +60,7 @@ class ChassisRepositoryIT {
         List<ChassisEntity> result = underTest.findByName("name");
 
         //then
-        assertThat(result).isNotEqualTo(expected);
+        BDDAssertions.then(result).isNotEqualTo(expected);
     }
 
     @Test
