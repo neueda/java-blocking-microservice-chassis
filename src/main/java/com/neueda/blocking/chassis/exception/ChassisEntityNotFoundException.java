@@ -1,6 +1,6 @@
 package com.neueda.blocking.chassis.exception;
 
-public class ChassisEntityNotFoundException extends RuntimeException {
+public class ChassisEntityNotFoundException extends Exception {
 
     private final String path;
 
