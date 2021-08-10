@@ -43,7 +43,7 @@ public class ChassisController {
     }
 
     @DeleteMapping({"/chassis/{id}"})
-    public void deleteChassis(@PathVariable("id") String id) throws ChassisEntityNotFoundException
+    public void deleteChassis(@PathVariable("id") String id)
     {
         chassisService.deleteChassis(Long.valueOf(id));
     }

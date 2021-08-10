@@ -61,6 +61,3 @@ logging:
     liquibase:
       database: trace
 
-data:
-  exception:
-    message1: ChassisEntityNotFound

@@ -6,6 +6,7 @@ import com.neueda.blocking.chassis.model.Chassis;
 import com.neueda.blocking.chassis.entity.ChassisEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -17,11 +18,8 @@ public class ChassisService {
         return chassisRepository.findAll();
     }
 
-    public ChassisEntity retrieveChassisById(Long id) throws ChassisEntityNotFoundException {
-        if (chassisRepository.findById(id).isEmpty()) {
-            throw new ChassisEntityNotFoundException("/v1/chassis", "No Chassis Found With Id "+id);
-        }
-        return chassisRepository.findById(id).get();
+    public ChassisEntity retrieveChassisById(Long id) {
+        return chassisRepository.findById(id).orElseThrow(() -> new ChassisEntityNotFoundException("v1/chassis/{id}","Chassis not found with id "+id));
     }
 
     public List<ChassisEntity> searchChassisByName(String name) throws ChassisEntityNotFoundException {
