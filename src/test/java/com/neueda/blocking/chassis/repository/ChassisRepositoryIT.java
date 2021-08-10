@@ -12,7 +12,7 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 @DataJpaTest
-class ChassisRepositoryTest {
+class ChassisRepositoryIT {
 
     @Autowired
     ChassisRepository underTest;
