@@ -75,7 +75,7 @@ class ChassisControllerTests {
 
         final String name = RandomStringUtils.randomAlphabetic(5);
         final String description = RandomStringUtils.randomAlphabetic(6);
-        when(chassisService.retriveChassisById(5L)).thenReturn(new ChassisEntity(5L,name,description));
+        when(chassisService.retrieveChassisById(5L)).thenReturn(new ChassisEntity(5L,name,description));
         final Chassis expected = new Chassis(name, description);
 
         mockMvc.perform(get("/v1/chassis/5"))
@@ -86,7 +86,7 @@ class ChassisControllerTests {
     @Test
     @DisplayName("Testing get value by id not found method")
     void testGetChassisById_EntityNotFound() throws Exception {
-        when(chassisService.retriveChassisById(5L)).thenThrow(new ChassisEntityNotFoundException("",""));
+        when(chassisService.retrieveChassisById(5L)).thenThrow(new ChassisEntityNotFoundException("",""));
         mockMvc.perform(get("/v1/chassis/5"))
                 .andExpect(status().isNotFound());
     }
@@ -99,18 +99,18 @@ class ChassisControllerTests {
         final String description2 = RandomStringUtils.randomAlphabetic(7);
 
         when(chassisService.searchChassisByName(name))
-            .thenReturn(List.of(
-                new ChassisEntity(1L, name, description1),
-                new ChassisEntity(2L, name, description2)
-            ));
+                .thenReturn(List.of(
+                        new ChassisEntity(1L, name, description1),
+                        new ChassisEntity(2L, name, description2)
+                ));
 
         final Chassis chassis1 = new Chassis(name, description1);
         final Chassis chassis2 = new Chassis(name, description2);
         final List<Chassis> expected = List.of(chassis1, chassis2);
         mockMvc.perform(get("/v1/chassisSearch/" + name))
 
-            .andExpect(status().isOk())
-            .andExpect(content().json(objectMapper.writeValueAsString(expected)));
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(expected)));
     }
 
     @Test
@@ -144,15 +144,15 @@ class ChassisControllerTests {
                 .andExpect(status().isOk());
     }
 
-        // ToDo: This is just a exception test example it have to be replaced by a real method test
-        //when(chassisService.retrieveAllChassis())
-         //       .thenThrow(IllegalArgumentException.class);
+    // ToDo: This is just a exception test example it have to be replaced by a real method test
+    //when(chassisService.retrieveAllChassis())
+    //       .thenThrow(IllegalArgumentException.class);
 
-        // when
-        //ThrowingCallable methodUnderTest = () -> chassisService.retrieveAllChassis();
+    // when
+    //ThrowingCallable methodUnderTest = () -> chassisService.retrieveAllChassis();
 
-        // then
-        //BDDAssertions.thenThrownBy(methodUnderTest)
-          //      .isInstanceOf(IllegalArgumentException.class);
+    // then
+    //BDDAssertions.thenThrownBy(methodUnderTest)
+    //      .isInstanceOf(IllegalArgumentException.class);
 
 }

@@ -17,7 +17,7 @@ public class ChassisService {
         return chassisRepository.findAll();
     }
 
-    public ChassisEntity retriveChassisById(Long id) throws ChassisEntityNotFoundException {
+    public ChassisEntity retrieveChassisById(Long id) throws ChassisEntityNotFoundException {
         if (chassisRepository.findById(id).isEmpty()) {
             throw new ChassisEntityNotFoundException("/v1/chassis", "No Chassis Found With Id "+id);
         }
@@ -33,14 +33,14 @@ public class ChassisService {
 
     public ChassisEntity addChassis(Chassis chassis) {
         ChassisEntity chassisEntity = new ChassisEntity();
-        chassisEntity.setName(chassis.getName());
-        chassisEntity.setDescription(chassis.getDescription());
+        chassisEntity.setName(chassis.name());
+        chassisEntity.setDescription(chassis.description());
         return chassisRepository.save(chassisEntity);
     }
 
     public void deleteChassis(Long id) throws ChassisEntityNotFoundException {
         if (chassisRepository.findById(id).isEmpty()) {
-            throw new ChassisEntityNotFoundException("/v1//chassis/{id}", "Chassis Not Found With Id "+id);
+            throw new ChassisEntityNotFoundException("/v1//chassis/{id}", "Chassis Not Found");
         }
         chassisRepository.deleteById(id);
     }

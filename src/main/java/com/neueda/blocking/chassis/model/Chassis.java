@@ -1,29 +1,21 @@
 package com.neueda.blocking.chassis.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import javax.validation.constraints.NotBlank;
 
-@AllArgsConstructor
-@NoArgsConstructor
-public class Chassis {
+import static java.util.Objects.requireNonNull;
 
-    private String name;
-    private String description;
+public record Chassis(
+        @NotBlank(message = "Name is mandatory")
+        String name,
+        String description) {
 
-    public String getName() {
-        return name;
+    public Chassis {
+        requireNonNull(name);
+        if (name.isBlank())
+            throw new IllegalArgumentException("Name cannot be blank");
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public Chassis(String name) {
+        this(name, null);
     }
 }

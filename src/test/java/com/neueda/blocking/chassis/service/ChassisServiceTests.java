@@ -51,7 +51,7 @@ class ChassisServiceTests {
         Mockito.when(chassisRepository.findById(5L)).thenReturn(java.util.Optional.of(chassis));
 
         //when
-        BDDAssertions.then(chassisService.retriveChassisById(5L))
+        BDDAssertions.then(chassisService.retrieveChassisById(5L))
 
                 //then
                 .isEqualTo(chassis);

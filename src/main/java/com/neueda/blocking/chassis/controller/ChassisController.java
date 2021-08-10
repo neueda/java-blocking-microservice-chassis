@@ -26,7 +26,7 @@ public class ChassisController {
     @GetMapping("/chassis/{id}")
     public ChassisEntity getChassisById(@PathVariable String id) throws ChassisEntityNotFoundException
     {
-        return chassisService.retriveChassisById(Long.valueOf(id));
+        return chassisService.retrieveChassisById(Long.valueOf(id));
     }
 
     @GetMapping("/chassisSearch/{name}")
