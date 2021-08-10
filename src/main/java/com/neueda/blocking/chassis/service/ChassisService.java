@@ -19,28 +19,28 @@ public class ChassisService {
 
     public ChassisEntity retriveChassisById(Long id) throws ChassisEntityNotFoundException {
         if (chassisRepository.findById(id).isEmpty()) {
-            throw new ChassisEntityNotFoundException("/v1/chassis", "No Chassis Found");
+            throw new ChassisEntityNotFoundException("/v1/chassis", "No Chassis Found With Id "+id);
         }
         return chassisRepository.findById(id).get();
     }
 
     public List<ChassisEntity> searchChassisByName(String name) throws ChassisEntityNotFoundException {
         if (chassisRepository.findByName(name).isEmpty()) {
-            throw new ChassisEntityNotFoundException("/v1/chassisSearch/{name}", "No Chassis With The Name");
+            throw new ChassisEntityNotFoundException("/v1/chassisSearch/{name}", "No Chassis With The Name "+name);
         }
         return chassisRepository.findByName(name);
     }
 
-    public ChassisEntity addChassis(Chassis chassisDTO) {
+    public ChassisEntity addChassis(Chassis chassis) {
         ChassisEntity chassisEntity = new ChassisEntity();
-        chassisEntity.setName(chassisDTO.getName());
-        chassisEntity.setDescription(chassisDTO.getDescription());
+        chassisEntity.setName(chassis.getName());
+        chassisEntity.setDescription(chassis.getDescription());
         return chassisRepository.save(chassisEntity);
     }
 
     public void deleteChassis(Long id) throws ChassisEntityNotFoundException {
         if (chassisRepository.findById(id).isEmpty()) {
-            throw new ChassisEntityNotFoundException("/v1//chassis/{id}", "Chassis Not Found");
+            throw new ChassisEntityNotFoundException("/v1//chassis/{id}", "Chassis Not Found With Id "+id);
         }
         chassisRepository.deleteById(id);
     }
