@@ -18,33 +18,28 @@ public class ChassisController {
     private final ChassisService chassisService;
 
     @GetMapping("/chassis")
-    public List<ChassisEntity> getAllChassis()
-    {
+    public List<ChassisEntity> getAllChassis() {
         return chassisService.retrieveAllChassis();
     }
 
     @GetMapping("/chassis/{id}")
-    public ChassisEntity getChassisById(@PathVariable String id) throws ChassisEntityNotFoundException
-    {
+    public ChassisEntity getChassisById(@PathVariable String id) {
         return chassisService.retrieveChassisById(Long.valueOf(id));
     }
 
     @GetMapping("/chassisSearch/{name}")
-    public List<ChassisEntity> getChassisByName(@PathVariable String name) throws ChassisEntityNotFoundException
-    {
+    public List<ChassisEntity> getChassisByName(@PathVariable String name) {
         return chassisService.searchChassisByName(name);
     }
 
     @PostMapping("/chassis")
     @ResponseStatus(HttpStatus.CREATED)
-    public ChassisEntity create(@RequestBody Chassis chassis)
-    {
+    public ChassisEntity create(@RequestBody Chassis chassis) {
         return chassisService.addChassis(chassis);
     }
 
     @DeleteMapping({"/chassis/{id}"})
-    public void deleteChassis(@PathVariable("id") String id) throws ChassisEntityNotFoundException
-    {
+    public void deleteChassis(@PathVariable("id") String id) throws ChassisEntityNotFoundException {
         chassisService.deleteChassis(Long.valueOf(id));
     }
 }
