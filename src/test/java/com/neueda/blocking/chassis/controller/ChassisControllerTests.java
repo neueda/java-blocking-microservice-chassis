@@ -3,7 +3,6 @@ package com.neueda.blocking.chassis.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.neueda.blocking.chassis.entity.ChassisEntity;
-import com.neueda.blocking.chassis.exception.ChassisEntityNotFoundException;
 import com.neueda.blocking.chassis.model.Chassis;
 import com.neueda.blocking.chassis.repository.ChassisRepository;
 import com.neueda.blocking.chassis.service.ChassisService;
