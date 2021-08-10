@@ -127,11 +127,11 @@ class ChassisControllerTests {
     @DisplayName("Testing create method")
     void testCreate() throws Exception {
 
-        Chassis chassisDTO = new Chassis("name 6","description 6");
+        Chassis chassis = new Chassis("name 6","description 6");
         when(chassisService.addChassis(new Chassis("name 6","description 6"))).thenReturn( new ChassisEntity(6L,"name 6","description 6"));
         mockMvc.perform(post("/v1/chassis")
                         .contentType("application/json")
-                        .content(objectMapper.writeValueAsString(chassisDTO)))
+                        .content(objectMapper.writeValueAsString(chassis)))
                 .andExpect(status().isCreated());
     }
 
@@ -141,7 +141,7 @@ class ChassisControllerTests {
         ChassisEntity chassisEntity = new ChassisEntity(6L, "name 6", "description 6");
         doNothing().when(chassisService).deleteChassis(chassisEntity.getId());
         mockMvc.perform(delete("/v1/chassis/6").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isOk());
     }
 
         // ToDo: This is just a exception test example it have to be replaced by a real method test
