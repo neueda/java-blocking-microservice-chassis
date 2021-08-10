@@ -7,9 +7,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 
 @DataJpaTest
 class ChassisRepositoryTest {
@@ -57,5 +60,20 @@ class ChassisRepositoryTest {
 
         //then
         assertThat(result).isNotEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("Test entity annotated with Lombok @Data")
+    void shouldSetContainsEntity() {
+        // given
+        ChassisEntity chassisEntity = new ChassisEntity();
+        Set<ChassisEntity> chassisSet = new HashSet<>();
+
+        // when
+        chassisSet.add(chassisEntity);
+        underTest.save(chassisEntity);
+
+        //then
+        then(chassisSet.contains(chassisEntity)).isTrue();
     }
 }
