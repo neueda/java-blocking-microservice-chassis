@@ -6,6 +6,7 @@ import com.neueda.blocking.chassis.repository.ChassisRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -16,6 +17,7 @@ import java.util.List;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 @SpringJUnitConfig(ChassisService.class)
@@ -51,7 +53,7 @@ class ChassisServiceTests {
     {
         //Given
         ChassisEntity chassis = new ChassisEntity(5L,"name","description 1");
-        Mockito.when(chassisRepository.findById(5L)).thenReturn(java.util.Optional.of(chassis));
+        BDDMockito.when(chassisRepository.findById(5L)).thenReturn(java.util.Optional.of(chassis));
 
         //when
         then(chassisService.retrieveChassisById(5L))
@@ -92,8 +94,9 @@ class ChassisServiceTests {
         // given
         var expectedChassisEntity =
                 new ChassisEntity(null, "name", "description");
-        when(chassisRepository.save(any(ChassisEntity.class)))
-                .thenReturn(expectedChassisEntity);
+
+        given(chassisRepository.save(any(ChassisEntity.class)))
+                .willReturn(expectedChassisEntity);
 
         // when
         var addedChassisEntity =
