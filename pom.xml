@@ -20,6 +20,8 @@
 		<!-- dependency -->
 		<spring-cloud.version>2020.0.3</spring-cloud.version>
 		<testcontainers.version>1.16.0</testcontainers.version>
+		<!-- plugin -->
+		<spring-cloud-contract-plugin.version>3.0.3</spring-cloud-contract-plugin.version>
 		<!-- consumed by spring-boot application -->
 		<build.name>${project.artifactId}-${project.version}</build.name>
 	</properties>
@@ -104,6 +106,21 @@
 			<artifactId>jdbc</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- Contract Testing -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-contract-verifier</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-contract-stub-runner</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -138,6 +155,17 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-contract-maven-plugin</artifactId>
+				<version>${spring-cloud-contract-plugin.version}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<testFramework>JUNIT5</testFramework>
+					<testMode>MOCKMVC</testMode>
+					<baseClassForTests>com.neueda.blocking.chassis.contractsBase.ChassisBase</baseClassForTests>
 				</configuration>
 			</plugin>
         </plugins>

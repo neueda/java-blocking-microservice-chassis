@@ -19,8 +19,7 @@ public class ChassisService {
         return chassisRepository.findAll();
     }
 
-    public ChassisEntity retrieveChassisById(Long id)
-    {
+    public ChassisEntity retrieveChassisById(Long id) {
         return chassisRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Chassis not found with id : "+id));
     }
 

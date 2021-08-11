@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class JavaBlockingMicroserviceChassisApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(JavaBlockingMicroserviceChassisApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(JavaBlockingMicroserviceChassisApplication.class, args);
+    }
 
 }
