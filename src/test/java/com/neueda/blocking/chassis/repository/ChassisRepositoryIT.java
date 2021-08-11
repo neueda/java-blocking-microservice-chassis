@@ -1,22 +1,27 @@
 package com.neueda.blocking.chassis.repository;
 
+import com.neueda.blocking.chassis.PostgresTestContainer;
 import com.neueda.blocking.chassis.entity.ChassisEntity;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.assertj.core.api.BDDAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
 
 @DataJpaTest
-class ChassisRepositoryIT {
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+class ChassisRepositoryIT extends PostgresTestContainer {
 
     @Autowired
     ChassisRepository underTest;

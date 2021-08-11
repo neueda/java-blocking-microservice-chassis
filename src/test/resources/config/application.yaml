@@ -15,12 +15,6 @@ spring:
     change-log: "classpath:/db/changelog/db.changelog-master.xml"
     test-rollback-on-update: on
 
-  datasource:
-    url: jdbc:h2:mem:chassisdb
-    username: sa
-    password: sa
-    driverClassName: org.h2.Driver
-
   jpa:
     show-sql: true
     generate-ddl: true
