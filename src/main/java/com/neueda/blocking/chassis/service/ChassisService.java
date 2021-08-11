@@ -1,11 +1,12 @@
 package com.neueda.blocking.chassis.service;
 
-import com.neueda.blocking.chassis.exception.ChassisEntityNotFoundException;
-import com.neueda.blocking.chassis.repository.ChassisRepository;
-import com.neueda.blocking.chassis.model.Chassis;
 import com.neueda.blocking.chassis.entity.ChassisEntity;
+import com.neueda.blocking.chassis.exception.ChassisEntityNotFoundException;
+import com.neueda.blocking.chassis.model.Chassis;
+import com.neueda.blocking.chassis.repository.ChassisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class ChassisService {
         ChassisEntity chassisEntity = new ChassisEntity();
         chassisEntity.setName(chassis.name());
         chassisEntity.setDescription(chassis.description());
+
         return chassisRepository.save(chassisEntity);
     }
 

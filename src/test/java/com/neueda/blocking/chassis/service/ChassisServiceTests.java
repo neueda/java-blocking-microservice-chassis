@@ -1,27 +1,30 @@
 package com.neueda.blocking.chassis.service;
 
-import com.neueda.blocking.chassis.model.Chassis;
 import com.neueda.blocking.chassis.entity.ChassisEntity;
+import com.neueda.blocking.chassis.model.Chassis;
 import com.neueda.blocking.chassis.repository.ChassisRepository;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.assertj.core.api.BDDAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.assertj.core.api.BDDAssertions.then;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@SpringJUnitConfig
+@SpringJUnitConfig(ChassisService.class)
 class ChassisServiceTests {
 
-    @Mock
+    @MockBean
     private ChassisRepository chassisRepository;
 
-    @InjectMocks
+    @Autowired
     private ChassisService chassisService;
 
     @Test
@@ -36,7 +39,7 @@ class ChassisServiceTests {
                 .thenReturn(chassisEntity);
 
         //when
-        BDDAssertions.then(chassisService.retrieveAllChassis())
+        then(chassisService.retrieveAllChassis())
 
                 //then
                 .isEqualTo(chassisEntity);
@@ -44,14 +47,14 @@ class ChassisServiceTests {
 
     @Test
     @DisplayName("Testing search method by ID")
-    void testRetrieveChassisById() throws Exception
+    void testRetrieveChassisById()
     {
         //Given
         ChassisEntity chassis = new ChassisEntity(5L,"name","description 1");
         Mockito.when(chassisRepository.findById(5L)).thenReturn(java.util.Optional.of(chassis));
 
         //when
-        BDDAssertions.then(chassisService.retrieveChassisById(5L))
+        then(chassisService.retrieveChassisById(5L))
 
                 //then
                 .isEqualTo(chassis);
@@ -59,7 +62,7 @@ class ChassisServiceTests {
 
     @Test
     @DisplayName("Testing serch method by name")
-    void testSearchChassisByName() throws Exception
+    void testSearchChassisByName()
     {
         //Given
         final String name = RandomStringUtils.randomAlphabetic(5);
@@ -77,7 +80,7 @@ class ChassisServiceTests {
         final List<Chassis> expected = List.of(chassisDto1, chassisDto2);
 
         //when
-        BDDAssertions.then(chassisService.searchChassisByName(name)).usingElementComparatorIgnoringFields("id")
+        then(chassisService.searchChassisByName(name)).usingElementComparatorIgnoringFields("id")
 
                 //then
                 .isEqualTo(expected);
@@ -85,26 +88,24 @@ class ChassisServiceTests {
 
     @Test
     @DisplayName("Testing for add method")
-    void testAddChassis()
-    {
-        //Given
-        ChassisEntity chassis = new ChassisEntity();
-        chassis.setName("name");
-        chassis.setDescription("description");
-        Chassis chassis_dto = new Chassis("name","description");
+    void shouldAddChassis() {
+        // given
+        var expectedChassisEntity =
+                new ChassisEntity(null, "name", "description");
+        when(chassisRepository.save(any(ChassisEntity.class)))
+                .thenReturn(expectedChassisEntity);
 
-        when(chassisRepository.save(chassis)).thenReturn(chassis);
+        // when
+        var addedChassisEntity =
+                chassisService.addChassis(new Chassis("name","description"));
 
-        //when
-        BDDAssertions.then(chassisService.addChassis(chassis_dto))
-
-                //then
-                .isEqualTo(chassis);
+        // then
+        then(addedChassisEntity).isEqualTo(expectedChassisEntity);
     }
 
     @Test
     @DisplayName("Testing for delete method")
-    void testDeleteChassis() throws Exception
+    void testDeleteChassis()
     {
         //Given
         ChassisEntity chassis = new ChassisEntity(1L,"name","description ");
