@@ -1,0 +1,78 @@
+= AsciiDoc for Java-blocking-microservice-chassis tests results
+Doc Writer <farhat.ghani@neueda.com>
+:icons: font
+
+This document has been written in `plain text` with
+http://asciidoc.org[AsciiDoc].
+== Sample Section
+
+[square]
+* GET API
+* POST API
+* PUT API
+* DELETE API
+
+----
+----
+
+=== Display all tests output
+.request
+This is an example output for a service running at http://localhost:8080:
+
+==== GET API: requests and responses
+request
+{snippets}/testGetAllChassis/http-request.adoc
+
+response
+{snippets}/testGetAllChassis/http-response.adoc
+
+
+request
+{snippets}/testGetAllChassis_EntityNotFound/http-request.adoc
+
+response
+{snippets}/testGetAllChassis_EntityNotFound/http-response.adoc
+
+request
+{snippets}/testGetChassisById/http-request.adoc
+
+response
+{snippets}/testGetChassisById/http-response.adoc
+
+request
+{snippets}/testGetChassisById_EntityNotFound/http-request.adoc
+
+response
+{snippets}/testGetChassisById_EntityNotFound/http-response.adoc
+
+request
+{snippets}/testGetChassisByName/http-request.adoc
+
+response
+{snippets}/testGetChassisByName/http-response.adoc
+
+request
+{snippets}/testGetChassisByName_EntityNotFound/http-request.adoc
+
+response
+{snippets}/testGetChassisByName_EntityNotFound/http-response.adoc
+
+request
+{snippets}/testCreate/http-request.adoc
+
+response
+{snippets}/testCreate/http-response.adoc
+
+request
+{snippets}/testDeleteChassis/http-request.adoc
+
+response
+{snippets}/testDeleteChassis/http-response.adoc
+
+==== POST API: requests and responses
+==== PUT API: requests and responses
+==== DELETE API: requests and responses
+
+The data which we can see as part of documentation will loaded from MockMvc Test case data
+
+
