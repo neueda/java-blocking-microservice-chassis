@@ -52,11 +52,11 @@ class ChassisRepositoryIT extends PostgresTestContainer {
         final String description1 = RandomStringUtils.randomAlphabetic(6);
         final String description2 = RandomStringUtils.randomAlphabetic(7);
 
-        List<ChassisEntity> expected = (List.of(
+        List<ChassisEntity> chassisEntityList = (List.of(
                 new ChassisEntity(2L,name,description1),
                 new ChassisEntity(3L,name,description2)));
 
-        underTest.saveAll(expected);
+        List<ChassisEntity> expected = underTest.saveAll(chassisEntityList);
 
         //when
         List<ChassisEntity> result = underTest.findByName("name");
