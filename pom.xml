@@ -23,6 +23,8 @@
 		<springdoc.version> 1.5.10</springdoc.version>
 		<!-- plugin -->
 		<spring-cloud-contract-plugin.version>3.0.3</spring-cloud-contract-plugin.version>
+		<asciidoctor-plugin.version>1.5.8</asciidoctor-plugin.version>
+		<openapi-plugin.version>1.1</openapi-plugin.version>
 		<!-- consumed by spring-boot application -->
 		<build.name>${project.artifactId}-${project.version}</build.name>
 		<management.port>8081</management.port>
@@ -184,6 +186,31 @@
 					<testMode>MOCKMVC</testMode>
 					<baseClassForTests>com.neueda.blocking.chassis.contractsBase.ChassisBase</baseClassForTests>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.asciidoctor</groupId>
+				<artifactId>asciidoctor-maven-plugin</artifactId>
+				<version>${asciidoctor-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>generate-docs</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>process-asciidoc</goal>
+						</goals>
+						<configuration>
+							<backend>html</backend>
+							<doctype>book</doctype>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.springframework.restdocs</groupId>
+						<artifactId>spring-restdocs-asciidoctor</artifactId>
+						<version>${spring-restdocs.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
         </plugins>
 	</build>
