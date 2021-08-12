@@ -1,17 +1,25 @@
-# java-blocking-microservice-chassis
+# Java Blocking Microservice Chassis
 ## Table of contents
 - [Getting started](#getting-started)
   - [Requirements](#requirements)
-  - [Usage](#Usage)
-- [Dependencies](#Dependencies)
-  - [Development Tools](#Developement Tools)
-  - [Monitoring](#Monitoring)
-  - [Persistence](#Persistence)
-  - [Testing](#Testing)
-  - [API Documentations](#api Documentations)
-  
-## Requirements
-### Software
+  - [Usage](#usage)
+- [Dependencies](#dependencies)
+  - [Web Framework](#web-framework)
+  - [Development Tools](#development-tools)
+  - [Persistence](#persistence)
+  - [Data Migration](#data-migration)
+  - [Monitoring](#monitoring)
+  - [API Documentation](#api-documentation)
+  - [Testing](#testing)
+  - [Containerization](#containerization)
+
+- [Contributing](#contributing)
+- [License](#license)
+
+## Getting Started
+
+### Requirements
+#### Software
 - [JDK 16](https://www.oracle.com/java/technologies/javase-jdk16-downloads.html)
 - [intellij IDE](https://spring.io/guides/gs/intellij-idea/)
 - [Maven](https://maven.apache.org/download.cgi)
@@ -33,7 +41,7 @@ Stop and remove containers and networks:
 ```shell
 $ docker compose down
 ```
-## Dependencies
+### Dependencies
 #### Web Framework
 - [Spring Web](https://start.spring.io/)
 #### Development Tools
@@ -41,7 +49,7 @@ $ docker compose down
 - [Spring Boot Dev Tools](https://docs.spring.io/spring-boot/docs/2.5.3/reference/html/using.html#using.devtools)
 - [H2 database](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.sql.h2-web-console)
 #### Persistence
-- [spring-data-jpa](https://spring.io/projects/spring-data-jpa)
+- [Spring Data JPA](https://spring.io/projects/spring-data-jpa)
 #### Data Migration
 - [Liquibase](https://docs.liquibase.com/home.html)
 #### Monitoring
@@ -54,7 +62,7 @@ $ docker compose down
 - [TestContainers](https://www.testcontainers.org/)
 #### Containerization
 - [Layered Jar](https://docs.spring.io/spring-boot/docs/2.5.3/maven-plugin/reference/htmlsingle/#packaging.layers)
-## Contribution
-- [GitHub issues](https://github.com/neueda/java-blocking-microservice-chassis/issues)
+## Contributing
+- [GitHub Issues](https://github.com/neueda/java-blocking-microservice-chassis/issues)
 ## License
-- [ License](https://github.com/neueda/java-blocking-microservice-chassis/blob/master/LICENSE)
+- [License](https://github.com/neueda/java-blocking-microservice-chassis/blob/master/LICENSE)
