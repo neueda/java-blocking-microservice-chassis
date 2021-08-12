@@ -40,15 +40,25 @@ server:
     include-exception: on
     include-stacktrace: always
 
+management:
+  server:
+    port: @management.port@
+  endpoints:
+    web:
+      exposure:
+        include: health, openapi, swaggerui # For yaml format access /actuator/openapi/springdocDefault/yaml
+
 springdoc:
+  use-management-port: on
+  show-actuator: on
   api-docs:
     enabled: on
     path: /api-docs
 
-#apidoc:
-#  title: @project.name@
-#  description: @project.description@
-#  version: @project.version@
+apidoc:
+  title: @project.name@
+  description: @project.description@
+  version: @project.version@
 
 debug: off
 trace: off
@@ -63,4 +73,3 @@ logging:
       springframework:
         jdbc:
           datasource: trace
-
