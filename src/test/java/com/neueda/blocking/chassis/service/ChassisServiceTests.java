@@ -7,13 +7,10 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-
 import java.util.List;
-
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
@@ -30,7 +27,7 @@ class ChassisServiceTests {
     private ChassisService chassisService;
 
     @Test
-    @DisplayName("Testing to retrive all the chassis")
+    @DisplayName("Testing to retrieve all the chassis")
     void testRetrieveAllChassis()
     {
         //Given
