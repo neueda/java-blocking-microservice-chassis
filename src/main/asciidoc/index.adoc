@@ -4,9 +4,7 @@ Doc Writer <farhat.ghani@neueda.com>
 
 This document has been written in `plain text` with
 http://asciidoc.org[AsciiDoc].
-== Sample Section
 
-[square]
 * GET API
 * POST API
 * PUT API
@@ -19,7 +17,7 @@ http://asciidoc.org[AsciiDoc].
 .request
 This is an example output for a service running at http://localhost:8080:
 
-==== GET API: requests and responses
+===== GET API: requests and responses
 request
 {snippets}/testGetAllChassis/http-request.adoc
 
@@ -69,9 +67,9 @@ request
 response
 {snippets}/testDeleteChassis/http-response.adoc
 
-==== POST API: requests and responses
-==== PUT API: requests and responses
-==== DELETE API: requests and responses
+===== POST API: requests and responses
+===== PUT API: requests and responses
+===== DELETE API: requests and responses
 
 The data which we can see as part of documentation will loaded from MockMvc Test case data
 

@@ -15,7 +15,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import java.util.List;
 
 import static org.mockito.Mockito.doNothing;
@@ -23,6 +29,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @WebMvcTest(ChassisController.class)
 @AutoConfigureRestDocs(outputDir = "target/generated-snippets")
@@ -59,8 +66,10 @@ class ChassisControllerTests {
         mockMvc.perform(get("/v1/chassis"))
                 //then
                 .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(expected)));
-                //.andDo(document("testGetAllChassis"));
+                .andExpect(content().json(objectMapper.writeValueAsString(expected))).andDo(print())
+                .andDo(document("{testGetAllChassis}",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint())));
 
 
     }
@@ -73,7 +82,10 @@ class ChassisControllerTests {
         //when
         mockMvc.perform(get("/v1/chassis"))
                 //then
-                .andExpect(status().isOk());
+                .andExpect(status().isOk()).andDo(print())
+                .andDo(document("{testGetAllChassis_EntityNotFound}",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint())));
     }
 
     @Test
@@ -89,7 +101,10 @@ class ChassisControllerTests {
         mockMvc.perform(get("/v1/chassis/5"))
                 //then
                 .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(expected)));
+                .andExpect(content().json(objectMapper.writeValueAsString(expected))).andDo(print())
+                .andDo(document("{testGetChassisById}",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint())));
     }
 
     @Test
@@ -101,7 +116,10 @@ class ChassisControllerTests {
         //when
         mockMvc.perform(get("/v1/chassis/5"))
                 //then
-                .andExpect(status().isOk());
+                .andExpect(status().isOk()).andDo(print())
+                .andDo(document("{testGetChassisById_EntityNotFound}",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint())));
     }
 
     @Test
@@ -126,7 +144,10 @@ class ChassisControllerTests {
         mockMvc.perform(get("/v1/chassisSearch/" + name))
                 //then
                 .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(expected)));
+                .andExpect(content().json(objectMapper.writeValueAsString(expected))).andDo(print())
+                .andDo(document("{testGetChassisByName}",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint())));
     }
 
     @Test
@@ -139,7 +160,10 @@ class ChassisControllerTests {
         //when
         mockMvc.perform(get("/v1/chassisSearch/name"))
                 //then
-                .andExpect(status().isOk());
+                .andExpect(status().isOk()).andDo(print())
+                .andDo(document("{testGetChassisByName_EntityNotFound}",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint())));
     }
 
     @Test
@@ -154,7 +178,10 @@ class ChassisControllerTests {
                         //then
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(chassis)))
-                        .andExpect(status().isCreated());
+                        .andExpect(status().isCreated()).andDo(print())
+                        .andDo(document("{testCreate}",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint())));
     }
 
     @Test
@@ -167,7 +194,10 @@ class ChassisControllerTests {
         //when
         mockMvc.perform(delete("/v1/chassis/6").contentType(MediaType.APPLICATION_JSON))
                 //then
-                .andExpect(status().isOk());
+                .andExpect(status().isOk()).andDo(print())
+                .andDo(document("{testDeleteChassis}",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint())));
     }
 
     // ToDo: This is just a exception test example it have to be replaced by a real method test
