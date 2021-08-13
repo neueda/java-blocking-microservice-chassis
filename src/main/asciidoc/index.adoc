@@ -18,58 +18,75 @@ http://asciidoc.org[AsciiDoc].
 This is an example output for a service running at http://localhost:8080:
 
 ===== GET API: requests and responses
-request
-{snippets}/testGetAllChassis/http-request.adoc
+=== List all chassis call
 
-response
-{snippets}/testGetAllChassis/http-response.adoc
+.request
+include::{snippets}/{testGetAllChassis}/http-request.adoc[]
+include::{snippets}/{testGetAllChassis}/httpie-request.adoc[]
+include::{snippets}/{testGetAllChassis}/curl-request.adoc[]
+.response
+include::{snippets}/{testGetAllChassis}/http-response.adoc[]
 
 
-request
-{snippets}/testGetAllChassis_EntityNotFound/http-request.adoc
+.request
+include::{snippets}/{testGetAllChassis_EntityNotFound}/http-request.adoc[]
+include::{snippets}/{testGetAllChassis_EntityNotFound}/httpie-request.adoc[]
+include::{snippets}/{testGetAllChassis_EntityNotFound}/curl-request.adoc[]
+.response
+include::{snippets}/{testGetAllChassis_EntityNotFound}/http-response.adoc[]
 
-response
-{snippets}/testGetAllChassis_EntityNotFound/http-response.adoc
+.request
+include::{snippets}/{testGetChassisById}/http-request.adoc[]
+include::{snippets}/{testGetChassisById}/httpie-request.adoc[]
+include::{snippets}/{testGetChassisById}/curl-request.adoc[]
+.response
+include::{snippets}/{testGetChassisById}/http-response.adoc[]
 
-request
-{snippets}/testGetChassisById/http-request.adoc
+.request
+include::{snippets}/{testGetChassisById_EntityNotFound}/http-request.adoc[]
+include::{snippets}/{testGetChassisById_EntityNotFound}/httpie-request.adoc[]
+include::{snippets}/{testGetChassisById_EntityNotFound}/curl-request.adoc[]
 
-response
-{snippets}/testGetChassisById/http-response.adoc
+.response
+include::{snippets}/{testGetChassisById_EntityNotFound}/http-response.adoc[]
 
-request
-{snippets}/testGetChassisById_EntityNotFound/http-request.adoc
+.request
+include::{snippets}/{testGetChassisByName}/http-request.adoc[]
+include::{snippets}/{testGetChassisByName}/httpie-request.adoc[]
+include::{snippets}/{testGetChassisByName}/curl-request.adoc[]
 
-response
-{snippets}/testGetChassisById_EntityNotFound/http-response.adoc
+.response
+include::{snippets}/{testGetChassisByName}/http-response.adoc[]
 
-request
-{snippets}/testGetChassisByName/http-request.adoc
+.request
+include::{snippets}/{testGetChassisByName_EntityNotFound}/http-request.adoc[]
+include::{snippets}/{testGetChassisByName_EntityNotFound}/httpie-request.adoc[]
+include::{snippets}/{testGetChassisByName_EntityNotFound}/curl-request.adoc[]
 
-response
-{snippets}/testGetChassisByName/http-response.adoc
-
-request
-{snippets}/testGetChassisByName_EntityNotFound/http-request.adoc
-
-response
-{snippets}/testGetChassisByName_EntityNotFound/http-response.adoc
-
-request
-{snippets}/testCreate/http-request.adoc
-
-response
-{snippets}/testCreate/http-response.adoc
-
-request
-{snippets}/testDeleteChassis/http-request.adoc
-
-response
-{snippets}/testDeleteChassis/http-response.adoc
+.response
+include::{snippets}/{testGetChassisByName_EntityNotFound}/http-response.adoc[]
 
 ===== POST API: requests and responses
-===== PUT API: requests and responses
+.request
+include::{snippets}/{testCreate}/http-request.adoc[]
+include::{snippets}/{testCreate}/httpie-request.adoc[]
+include::{snippets}/{testCreate}/curl-request.adoc[]
+
+.response
+include::{snippets}/{testCreate}/http-response.adoc[]
+
 ===== DELETE API: requests and responses
+.request
+include::{snippets}/{testDeleteChassis}/http-request.adoc[]
+include::{snippets}/{testDeleteChassis}/httpie-request.adoc[]
+include::{snippets}/{testDeleteChassis}/curl-request.adoc[]
+
+.response
+include::{snippets}/{testDeleteChassis}/http-response.adoc[]
+
+
+===== PUT API: requests and responses
+
 
 The data which we can see as part of documentation will loaded from MockMvc Test case data
 
