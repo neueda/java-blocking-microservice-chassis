@@ -16,7 +16,7 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest(ChassisController.class)
-public class ChassisBase {
+public class ChassisBase extends ContractTest {
     @Autowired
     private ChassisController chassisController;
 
