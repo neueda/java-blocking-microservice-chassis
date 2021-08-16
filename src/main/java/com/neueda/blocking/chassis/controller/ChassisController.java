@@ -6,6 +6,8 @@ import com.neueda.blocking.chassis.entity.ChassisEntity;
 import com.neueda.blocking.chassis.exception.ChassisEntityNotFoundException;
 import com.neueda.blocking.chassis.service.ChassisService;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.implementation.bind.MethodDelegationBinder;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,6 +53,8 @@ public class ChassisController {
         }
         catch(NumberFormatException ex) {
             throw new IdFormatException("/v1/chassis/" + id, ex);
+        } catch (EmptyResultDataAccessException e){
+            throw new ChassisEntityNotFoundException("/v1/chassis/{id}", "Chassis Not Found");
         }
     }
 }
