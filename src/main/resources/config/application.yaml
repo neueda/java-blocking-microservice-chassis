@@ -40,6 +40,9 @@ server:
     include-exception: on
     include-stacktrace: always
 
+client:
+  base-url: https://api.github.com
+
 management:
   server:
     port: @management.port@
