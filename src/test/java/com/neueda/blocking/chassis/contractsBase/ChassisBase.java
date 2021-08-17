@@ -4,7 +4,6 @@ import com.neueda.blocking.chassis.controller.ChassisController;
 import com.neueda.blocking.chassis.entity.ChassisEntity;
 import com.neueda.blocking.chassis.service.ChassisService;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -16,7 +15,7 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest(ChassisController.class)
-public class ChassisBase {
+public class ChassisBase extends ContractTest {
     @Autowired
     private ChassisController chassisController;
 
@@ -29,16 +28,13 @@ public class ChassisBase {
     @BeforeEach
     void setUp() {
 
-        RestAssuredMockMvc.mockMvc(mockMvc);
+        RestAssuredMockMvc.standaloneSetup(chassisController);
 
-        //Given
-        final String name = RandomStringUtils.randomAlphabetic(5);
-        final String description1 = RandomStringUtils.randomAlphabetic(6);
-        final String description2 = RandomStringUtils.randomAlphabetic(7);
+        List<ChassisEntity> response = List.of(
+                new ChassisEntity(1L,"test name","test description"));
         when(chassisService.retrieveAllChassis())
-                .thenReturn(List.of(
-                        new ChassisEntity(1L,name,description1),
-                        new ChassisEntity(2L,name,description2)));
+                .thenReturn(response);
+
     }
 
 }
