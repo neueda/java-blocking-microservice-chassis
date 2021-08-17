@@ -9,13 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-
 import java.util.List;
-
 import static org.mockito.Mockito.when;
 
 @WebMvcTest(ChassisController.class)
-public class ChassisBase extends ContractTest {
+public class ChassisBase extends BaseContractTest {
     @Autowired
     private ChassisController chassisController;
 
@@ -28,7 +26,7 @@ public class ChassisBase extends ContractTest {
     @BeforeEach
     void setUp() {
 
-        RestAssuredMockMvc.standaloneSetup(chassisController);
+        RestAssuredMockMvc.standaloneSetup(mockMvc);
 
         List<ChassisEntity> response = List.of(
                 new ChassisEntity(1L,"test name","test description"));
