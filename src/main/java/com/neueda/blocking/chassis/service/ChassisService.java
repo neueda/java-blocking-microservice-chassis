@@ -6,6 +6,7 @@ import com.neueda.blocking.chassis.model.Chassis;
 import com.neueda.blocking.chassis.repository.ChassisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -26,16 +27,12 @@ public class ChassisService {
 
 
     public List<ChassisEntity> searchChassisByName(String name) {
-//        if (chassisRepository.findByName(name).isEmpty()) {
-//            throw new EntityNotFoundException("Chassis not found with name : "+name);
-//        }
-//        return chassisRepository.findByName(name);
-        if (name.isBlank() || name.isEmpty()) {
+        if (!StringUtils.hasText(name)) {
             throw new EntityNotFoundException("No Chassis with Blank value or Empty value ");
         }
         else{
             List<ChassisEntity> chassis = chassisRepository.findByName(name);
-            if (chassis.size() == 0) {
+            if (chassis.isEmpty()) {
                 throw new EntityNotFoundException("Chassis not found with name : " + name);
             }
             return chassis;
@@ -50,12 +47,11 @@ public class ChassisService {
         return chassisRepository.save(chassisEntity);
     }
 
-    public void deleteChassis(Long id) {
-//        if (chassisRepository.findById(id).isEmpty()) {
-//            throw new ChassisEntityNotFoundException("/v1/chassis/{id}", "Chassis Not Found");
-//        }
-//        chassisRepository.deleteById(id);
-
+    public void deleteChassis(Long id) throws ChassisEntityNotFoundException {
+        if (chassisRepository.findById(id).isEmpty()) {
+            throw new ChassisEntityNotFoundException("/v1/chassis/{id}", "Chassis Not Found");
+        }
+        chassisRepository.deleteById(id);
           chassisRepository.deleteById(id);
     }
 }
