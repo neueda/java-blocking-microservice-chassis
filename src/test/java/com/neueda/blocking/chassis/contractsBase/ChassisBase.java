@@ -28,17 +28,12 @@ public class ChassisBase extends BaseContractTest {
     @BeforeEach
     void setUp() {
 
-        RestAssuredMockMvc.standaloneSetup(mockMvc);
+        RestAssuredMockMvc.mockMvc(mockMvc);
 
         List<ChassisEntity> response = List.of(
                 new ChassisEntity(1L,"test name","test description"));
         when(chassisService.retrieveAllChassis())
                 .thenReturn(response);
-
-    }
-    @Test
-    @DisplayName("Test to check name is correct")
-    void testGetName(){
 
     }
 

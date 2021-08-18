@@ -193,7 +193,7 @@
 				<configuration>
 					<testFramework>JUNIT5</testFramework>
 					<testMode>MOCKMVC</testMode>
-					<baseClassForTests>com.neueda.blocking.chassis.contractsBase.BaseContractTest</baseClassForTests>
+					<baseClassForTests>com.neueda.blocking.chassis.contractsBase.ChassisBase</baseClassForTests>
 				</configuration>
 			</plugin>
 			<plugin>
