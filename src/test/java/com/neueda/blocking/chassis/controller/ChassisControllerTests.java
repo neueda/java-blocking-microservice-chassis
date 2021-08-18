@@ -80,6 +80,7 @@ class ChassisControllerTests {
     }
 
     @Test
+    @DisplayName("Testing get values by Id method")
     void testGetAllChassis_EntityNotFound() throws Exception {
         //Given
         when(chassisService.retrieveAllChassis()).thenReturn(null);
