@@ -26,6 +26,7 @@ abstract class BaseContractTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
     private RestDocumentationContextProvider restDocumentation;
 
     private WebApplicationContext context;
