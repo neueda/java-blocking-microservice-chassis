@@ -13,7 +13,7 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 
-@Tag("ContractTest")
+@Tag("BaseContractTest")
 @AutoConfigureRestDocs
 abstract class BaseContractTest {
 
@@ -23,6 +23,7 @@ abstract class BaseContractTest {
     @Autowired
     private RestDocumentationConfigurer configurer;
 
+    @Autowired
     private MockMvc mockMvc;
 
     private RestDocumentationContextProvider restDocumentation;

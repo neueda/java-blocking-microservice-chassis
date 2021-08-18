@@ -5,6 +5,8 @@ import com.neueda.blocking.chassis.entity.ChassisEntity;
 import com.neueda.blocking.chassis.service.ChassisService;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -32,6 +34,11 @@ public class ChassisBase extends BaseContractTest {
                 new ChassisEntity(1L,"test name","test description"));
         when(chassisService.retrieveAllChassis())
                 .thenReturn(response);
+
+    }
+    @Test
+    @DisplayName("Test to check name is correct")
+    void testGetName(){
 
     }
 
