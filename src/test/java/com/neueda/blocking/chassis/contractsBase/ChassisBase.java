@@ -31,10 +31,10 @@ public abstract class ChassisBase {
 
     @BeforeEach
     void setUp(@Autowired MockMvc mockMvc) {
-        //init
+        // setup
         RestAssuredMockMvc.mockMvc(mockMvc);
 
-        //given
+        // given
         List<ChassisEntity> response = List.of(
                 new ChassisEntity(1L,"test name","test description"));
         given(chassisService.retrieveAllChassis())
