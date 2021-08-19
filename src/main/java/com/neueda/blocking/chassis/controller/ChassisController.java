@@ -7,7 +7,8 @@ import com.neueda.blocking.chassis.entity.ChassisEntity;
 import com.neueda.blocking.chassis.exception.ChassisEntityNotFoundException;
 import com.neueda.blocking.chassis.service.ChassisService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.*;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -62,7 +63,7 @@ public class ChassisController {
     @GetMapping({"chassisClientNameContain", "chassisClientNameContain/{usernamePart}"})
     public String getChassisWebClientResponse(@PathVariable String usernamePart) throws IOException, InterruptedException {
 
-        HttpResponse<String> response = githubClient.searchUsernameContaining(usernamePart);
-        return response.body();
+        return githubClient.searchUsernameContaining(usernamePart);
+
     }
 }
