@@ -13,16 +13,18 @@ import org.springframework.stereotype.Service;
 public class GithubClient {
 
     private final ClientHelper clientHelper;
-    private final String baseUrl;
 
-    public GithubClient(ClientProperties props) {
-        HttpClient httpClient = HttpClient.newHttpClient();
-        this.clientHelper = new ClientHelper(httpClient);
-        this.baseUrl = props.baseUrl().toString();
+    public GithubClient(ClientProperties clientProps) {
+        this.clientHelper = new ClientHelper(clientProps);
     }
 
-    public HttpResponse<String> searchUsernameContaining(@NonNull String value) throws IOException, InterruptedException {
+    public String searchUsernameContaining(@NonNull String value) {
 
-        return clientHelper.performGetRequest(URI.create(baseUrl + "/search/users?q=" + value + "+repos:%3E0"));
+        HttpResponse<String> response = clientHelper.performGetRequest(uriBuilder -> uriBuilder
+                .pathSegment("search")
+                .pathSegment("users")
+                .queryParam("q", value.concat("+repos:>0"))
+                .build());
+        return response.body();
     }
 }
