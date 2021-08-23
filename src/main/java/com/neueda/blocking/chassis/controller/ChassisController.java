@@ -51,16 +51,13 @@ public class ChassisController {
         return chassisService.addChassis(chassis);
     }
 
-
-    @DeleteMapping({ChassisConstants.CHASSIS_URL+"/{id}"})
+    @DeleteMapping({"/chassis/{id}"})
     public void deleteChassis(@PathVariable("id") String id) throws ChassisEntityNotFoundException {
         try {
             chassisService.deleteChassis(Long.valueOf(id));
         }
         catch(NumberFormatException ex) {
-            throw new IdFormatException(ChassisConstants.BASE_URL+ChassisConstants.CHASSIS_URL + id, ex);
-        } catch (EmptyResultDataAccessException e){
-            throw new ChassisEntityNotFoundException("/v1/chassis/{id}", "Chassis Not Found");
+            throw new IdFormatException("/v1/chassis/" + id, ex);
         }
     }
 
