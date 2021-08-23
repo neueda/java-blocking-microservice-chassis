@@ -1,16 +1,15 @@
 package com.neueda.blocking.chassis.controller;
 
 import com.neueda.blocking.chassis.client.GithubClient;
+import com.neueda.blocking.chassis.constants.ChassisConstants;
 import com.neueda.blocking.chassis.exception.IdFormatException;
 import com.neueda.blocking.chassis.model.Chassis;
 import com.neueda.blocking.chassis.entity.ChassisEntity;
 import com.neueda.blocking.chassis.exception.ChassisEntityNotFoundException;
 import com.neueda.blocking.chassis.service.ChassisService;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -20,24 +19,24 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/v1")
+@RequestMapping(ChassisConstants.BASE_URL)
 public class ChassisController {
 
     private final ChassisService chassisService;
     private final GithubClient githubClient;
 
-    @GetMapping("/chassis")
+    @GetMapping(ChassisConstants.CHASSIS_URL)
     public List<ChassisEntity> getAllChassis() {
         return chassisService.retrieveAllChassis();
     }
 
-    @GetMapping("/chassis/{id}")
+    @GetMapping(ChassisConstants.CHASSIS_URL+"/{id}")
     public ChassisEntity getChassisById(@PathVariable String id) {
         try{
         return chassisService.retrieveChassisById(Long.valueOf(id));
         }
         catch(NumberFormatException ex) {
-            throw new IdFormatException("/v1/chassis/" + id, ex);
+            throw new IdFormatException(ChassisConstants.CHASSIS_URL + id, ex);
         }
     }
 
@@ -46,19 +45,20 @@ public class ChassisController {
         return chassisService.searchChassisByName(name);
     }
 
-    @PostMapping("/chassis")
+    @PostMapping(ChassisConstants.CHASSIS_URL)
     @ResponseStatus(HttpStatus.CREATED)
     public ChassisEntity create(@RequestBody Chassis chassis) {
         return chassisService.addChassis(chassis);
     }
 
-    @DeleteMapping({"/chassis/{id}"})
+
+    @DeleteMapping({ChassisConstants.CHASSIS_URL+"/{id}"})
     public void deleteChassis(@PathVariable("id") String id) throws ChassisEntityNotFoundException {
-        try{
+        try {
             chassisService.deleteChassis(Long.valueOf(id));
         }
         catch(NumberFormatException ex) {
-            throw new IdFormatException("/v1/chassis/" + id, ex);
+            throw new IdFormatException(ChassisConstants.BASE_URL+ChassisConstants.CHASSIS_URL + id, ex);
         } catch (EmptyResultDataAccessException e){
             throw new ChassisEntityNotFoundException("/v1/chassis/{id}", "Chassis Not Found");
         }

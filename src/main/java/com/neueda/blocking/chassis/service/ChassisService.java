@@ -30,13 +30,11 @@ public class ChassisService {
         if (!StringUtils.hasText(name)) {
             throw new EntityNotFoundException("No Chassis with Blank value or Empty value ");
         }
-        else{
-            List<ChassisEntity> chassis = chassisRepository.findByName(name);
-            if (chassis.isEmpty()) {
-                throw new EntityNotFoundException("Chassis not found with name : " + name);
-            }
-            return chassis;
+        List<ChassisEntity> chassis = chassisRepository.findByName(name);
+        if (chassis.isEmpty()) {
+            throw new EntityNotFoundException("Chassis not found with name : " + name);
         }
+        return chassis;
     }
 
     public ChassisEntity addChassis(Chassis chassis) {
@@ -52,6 +50,6 @@ public class ChassisService {
             throw new ChassisEntityNotFoundException("/v1/chassis/{id}", "Chassis Not Found");
         }
         chassisRepository.deleteById(id);
-          chassisRepository.deleteById(id);
+
     }
 }
