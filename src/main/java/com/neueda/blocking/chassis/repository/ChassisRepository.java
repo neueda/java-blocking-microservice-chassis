@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ChassisRepository extends JpaRepository<ChassisEntity, Long> {
 
-     @Query("select c from ChassisEntity c where c.name LIKE %:name%")
-     List<ChassisEntity> findByName(@Param("name") String name);
+//     @Query("select c from ChassisEntity c where c.name LIKE %:name%")
+       List<ChassisEntity> findByName(@Param("name") String name);
 
 }

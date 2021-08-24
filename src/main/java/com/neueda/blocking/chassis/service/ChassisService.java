@@ -1,7 +1,10 @@
 package com.neueda.blocking.chassis.service;
 
+import com.neueda.blocking.chassis.constants.ChassisConstants;
 import com.neueda.blocking.chassis.entity.ChassisEntity;
 import com.neueda.blocking.chassis.exception.ChassisEntityNotFoundException;
+import com.neueda.blocking.chassis.exception.NameFormatException;
+import com.neueda.blocking.chassis.exception.NoRecordsFetchedException;
 import com.neueda.blocking.chassis.model.Chassis;
 import com.neueda.blocking.chassis.repository.ChassisRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,17 +25,17 @@ public class ChassisService {
     }
 
     public ChassisEntity retrieveChassisById(Long id) {
-        return chassisRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Chassis not found with id : "+id));
+        return chassisRepository.findById(id).orElseThrow(() -> new NoRecordsFetchedException("Chassis not found with id : "+id));
     }
 
 
     public List<ChassisEntity> searchChassisByName(String name) {
         if (!StringUtils.hasText(name)) {
-            throw new EntityNotFoundException("No Chassis with Blank value or Empty value ");
+            throw new NameFormatException("No Chassis with Blank value or Empty value ");
         }
         List<ChassisEntity> chassis = chassisRepository.findByName(name);
         if (chassis.isEmpty()) {
-            throw new EntityNotFoundException("Chassis not found with name : " + name);
+            throw new NoRecordsFetchedException("Chassis not found with name : " + name);
         }
         return chassis;
     }
@@ -41,13 +44,12 @@ public class ChassisService {
         ChassisEntity chassisEntity = new ChassisEntity();
         chassisEntity.setName(chassis.name());
         chassisEntity.setDescription(chassis.description());
-
         return chassisRepository.save(chassisEntity);
     }
 
-    public void deleteChassis(Long id) throws ChassisEntityNotFoundException {
+    public void deleteChassis(Long id)  {
         if (chassisRepository.findById(id).isEmpty()) {
-            throw new ChassisEntityNotFoundException("/v1/chassis/{id}", "Chassis Not Found");
+            throw new NoRecordsFetchedException(ChassisConstants.BASE_URL+ChassisConstants.CHASSIS_URL +"/"+String.valueOf(id));
         }
         chassisRepository.deleteById(id);
 

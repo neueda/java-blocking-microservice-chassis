@@ -8,8 +8,10 @@ import com.neueda.blocking.chassis.entity.ChassisEntity;
 import com.neueda.blocking.chassis.exception.ChassisEntityNotFoundException;
 import com.neueda.blocking.chassis.service.ChassisService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -30,14 +32,13 @@ public class ChassisController {
         return chassisService.retrieveAllChassis();
     }
 
-    @GetMapping(ChassisConstants.CHASSIS_URL+"/{id}")
-    public ChassisEntity getChassisById(@PathVariable String id) {
-        try{
-        return chassisService.retrieveChassisById(Long.valueOf(id));
+    @GetMapping(ChassisConstants.CHASSIS_URL + "/{id}")
+    public ResponseEntity<ChassisEntity> getChassisById(@PathVariable String id) {
+        if (!StringUtils.isNumeric(id)) {
+            throw new IdFormatException(ChassisConstants.BASE_URL + ChassisConstants.CHASSIS_URL + "/"+ id + " .Please check the entered Id");
         }
-        catch(NumberFormatException ex) {
-            throw new IdFormatException(ChassisConstants.CHASSIS_URL + id, ex);
-        }
+        return new ResponseEntity<>(chassisService.retrieveChassisById(Long.valueOf(id)), HttpStatus.OK);
+
     }
 
     @GetMapping("/chassisSearch/{name}")
@@ -51,14 +52,13 @@ public class ChassisController {
         return chassisService.addChassis(chassis);
     }
 
-    @DeleteMapping({ChassisConstants.CHASSIS_URL+"/{id}"})
-    public void deleteChassis(@PathVariable("id") String id) throws ChassisEntityNotFoundException {
-        try {
-            chassisService.deleteChassis(Long.valueOf(id));
+    @DeleteMapping({ChassisConstants.CHASSIS_URL + "/{id}"})
+    public ResponseEntity<Void> deleteChassis(@PathVariable("id") String id) {
+        if(!StringUtils.isNumeric(id)){
+            throw new IdFormatException(ChassisConstants.BASE_URL + ChassisConstants.CHASSIS_URL + "/" +id + " .Please check the entered Id");
         }
-        catch(NumberFormatException ex) {
-            throw new IdFormatException(ChassisConstants.BASE_URL+ ChassisConstants.CHASSIS_URL+ id, ex);
-        }
+        chassisService.deleteChassis(Long.valueOf(id));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping({"chassisClientNameContain", "chassisClientNameContain/{usernamePart}"})
