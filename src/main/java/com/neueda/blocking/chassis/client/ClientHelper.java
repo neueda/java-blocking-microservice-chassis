@@ -1,10 +1,12 @@
 package com.neueda.blocking.chassis.client;
 
+import com.neueda.blocking.chassis.exception.CustomException;
 import com.neueda.blocking.chassis.exception.CustomIOexception;
 import com.neueda.blocking.chassis.exception.CustomInterruptedException;
 import com.neueda.blocking.chassis.properties.ClientProperties;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.util.UriBuilder;
 
 import java.io.IOException;
@@ -18,6 +20,7 @@ import static org.springframework.web.util.UriComponentsBuilder.fromUri;
 
 @RequiredArgsConstructor
 @Getter
+@Slf4j
 public class ClientHelper {
 
     private final HttpClient httpClient;
@@ -28,20 +31,20 @@ public class ClientHelper {
         this.baseUrl = clientProps.baseUrl();
     }
 
-    HttpResponse<String> performGetRequest(Function<UriBuilder, URI> uriFunction) {
-        HttpRequest request = HttpRequest.newBuilder()
-                .GET()
-                .header("accept", "application/json")
-                .uri(uriFunction.apply(fromUri(baseUrl)))
-                .build();
+    HttpResponse<?> performGetRequest(Function<UriBuilder, URI> uriFunction) throws CustomException {
         try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .GET()
+                    .header("accept", "application/json")
+                    .uri(uriFunction.apply(fromUri(baseUrl)))
+                    .build();
+
             return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return (HttpResponse<String>) new CustomIOexception("IO exception");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            return (HttpResponse<String>) new CustomInterruptedException("This thread was interrupted");
+        }
+
+        catch (IOException | InterruptedException e) {
+            log.error("this thread is interrupted or i/o error", e);
+            return (HttpResponse<?>) new CustomException("An error has occurred");
         }
     }
 }
