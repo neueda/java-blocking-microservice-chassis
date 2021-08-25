@@ -1,8 +1,6 @@
 package com.neueda.blocking.chassis.client;
 
 import com.neueda.blocking.chassis.exception.CustomException;
-import com.neueda.blocking.chassis.exception.CustomIOexception;
-import com.neueda.blocking.chassis.exception.CustomInterruptedException;
 import com.neueda.blocking.chassis.properties.ClientProperties;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +42,7 @@ public class ClientHelper {
 
         catch (IOException | InterruptedException e) {
             log.error("this thread is interrupted or i/o error", e);
-            return (HttpResponse<?>) new CustomException("An error has occurred");
+            return (HttpResponse<?>) new CustomException("An error has occurred", e, "v1/chassisClientNameContain");
         }
     }
 }
