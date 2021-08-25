@@ -1,8 +1,5 @@
 package com.neueda.blocking.chassis.model;
 
-import lombok.Setter;
-
-
 import static java.util.Objects.requireNonNull;
 
 public record ErrorResponse(Integer statusCode, String error, String description, String path) {

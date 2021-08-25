@@ -1,8 +1,6 @@
 package com.neueda.blocking.chassis.exception;
 
-import liquibase.pro.packaged.L;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public class FatalException extends RuntimeException{
