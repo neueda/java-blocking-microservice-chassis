@@ -22,6 +22,11 @@ public class GlobalExceptionHandler {
     private ErrorResponse handleChassisEntityNotFoundException(ChassisEntityNotFoundException ex) {
         return logAndRespond(ex, ex.getPath());
     }
+    @ExceptionHandler(CustomException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    private ErrorResponse handleCustomException(CustomException ex) {
+        return logAndRespond(ex, ex.getPath());
+    }
     private ErrorResponse logAndRespond(Exception ex, String path) {
         String errorMsg = ex.getLocalizedMessage();
         log.error(errorMsg, ex);
