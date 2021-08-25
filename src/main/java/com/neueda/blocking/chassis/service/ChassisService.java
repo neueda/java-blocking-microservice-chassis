@@ -7,12 +7,12 @@ import com.neueda.blocking.chassis.model.Chassis;
 import com.neueda.blocking.chassis.repository.ChassisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 import static com.neueda.blocking.chassis.constants.ChassisConstants.BASE_URL;
 import static com.neueda.blocking.chassis.constants.ChassisConstants.CHASSIS_URL;
+import static org.springframework.util.StringUtils.hasText;
 
 @RequiredArgsConstructor
 @Service
@@ -29,7 +29,7 @@ public class ChassisService {
 
 
     public List<ChassisEntity> searchChassisByName(String name) {
-        if (!StringUtils.hasText(name)) {
+        if (!hasText(name)) {
             throw new NameFormatException("No Chassis with Blank value or Empty value", BASE_URL + CHASSIS_URL + "/" + name);
         }
         List<ChassisEntity> chassis = chassisRepository.findByName(name);
