@@ -1,24 +1,47 @@
 package com.neueda.blocking.chassis.client;
-
+import com.neueda.blocking.chassis.exception.CustomException;
+import com.neueda.blocking.chassis.properties.ClientProperties;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.util.UriBuilder;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.function.Function;
+
+import static org.springframework.web.util.UriComponentsBuilder.fromUri;
 
 @RequiredArgsConstructor
+@Getter
+@Slf4j
 public class ClientHelper {
 
     private final HttpClient httpClient;
+    private final URI baseUrl;
 
-    HttpResponse<String> performGetRequest(URI uri) throws IOException, InterruptedException {
-        HttpRequest request = HttpRequest.newBuilder()
-                .GET()
-                .header("accept", "application/json")
-                .uri(uri)
-                .build();
-        return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+    ClientHelper(ClientProperties clientProps) {
+        this.httpClient = HttpClient.newHttpClient();
+        this.baseUrl = clientProps.baseUrl();
+    }
+
+    HttpResponse<?> performGetRequest(Function<UriBuilder, URI> uriFunction) throws CustomException {
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .GET()
+                    .header("accept", "application/json")
+                    .uri(uriFunction.apply(fromUri(baseUrl)))
+                    .build();
+
+            return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        }
+
+        catch (IOException | InterruptedException e) {
+            log.error("this thread is interrupted or i/o error", e);
+            return (HttpResponse<?>) new CustomException("An error has occurred", e, "v1/chassisClientNameContain");
+        }
     }
 }

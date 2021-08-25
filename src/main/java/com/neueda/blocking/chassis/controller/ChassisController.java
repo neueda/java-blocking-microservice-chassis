@@ -59,10 +59,10 @@ public class ChassisController {
         }
     }
 
-    @GetMapping({"chassisClientNameContain", "chassisClientNameContain/{usernamePart}"})
-    public String getChassisWebClientResponse(@PathVariable String usernamePart) throws IOException, InterruptedException {
-
-        HttpResponse<String> response = githubClient.searchUsernameContaining(usernamePart);
-        return response.body();
-    }
+//    @GetMapping({"chassisClientNameContain", "chassisClientNameContain/{usernamePart}"})
+//    public String getChassisWebClientResponse(@PathVariable String usernamePart) throws IOException, InterruptedException {
+//
+//        HttpResponse<String> response = githubClient.searchUsernameContaining(usernamePart);
+//        return response.body();
+//    }
 }
