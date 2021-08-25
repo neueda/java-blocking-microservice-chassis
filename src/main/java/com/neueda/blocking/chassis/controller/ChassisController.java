@@ -22,8 +22,8 @@ import java.util.List;
 
 import static com.neueda.blocking.chassis.constants.ChassisConstants.BASE_URL;
 import static com.neueda.blocking.chassis.constants.ChassisConstants.CHASSIS_URL;
-import static java.lang.String.*;
 import static java.lang.String.format;
+import static java.lang.String.valueOf;
 import static org.apache.commons.lang3.StringUtils.isNumeric;
 
 ;

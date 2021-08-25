@@ -8,12 +8,12 @@ import com.neueda.blocking.chassis.repository.ChassisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Formatter;
 import java.util.List;
 
 import static com.neueda.blocking.chassis.constants.ChassisConstants.BASE_URL;
 import static com.neueda.blocking.chassis.constants.ChassisConstants.CHASSIS_URL;
-import static java.lang.String.*;
+import static java.lang.String.format;
+import static java.lang.String.valueOf;
 import static org.springframework.util.StringUtils.hasText;
 
 @RequiredArgsConstructor
