@@ -5,12 +5,13 @@ import lombok.Setter;
 
 import static java.util.Objects.requireNonNull;
 
-public record ErrorResponse(int statusCode, String error, String description) {
+public record ErrorResponse(Integer statusCode, String error, String description, String path) {
 
     public ErrorResponse {
         requireNonNull(statusCode);
         requireNonNull(error);
         requireNonNull(description);
+        requireNonNull(path);
     }
 
 }

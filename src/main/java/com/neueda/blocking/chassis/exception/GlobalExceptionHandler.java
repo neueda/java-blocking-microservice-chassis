@@ -9,28 +9,26 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
+@RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(IdFormatException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    private ResponseEntity<ErrorResponse> handleNumberFormatError(IdFormatException ex) {
-        ErrorResponse message = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),ex.getError(),ex.getDescription());
-        return new ResponseEntity<>(message,HttpStatus.BAD_REQUEST);
+    private ErrorResponse handleNumberFormatError(IdFormatException ex) {
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(),ex.getError(),ex.getDescription(), ex.getPath());
     }
 
     @ExceptionHandler(NoRecordsFetchedException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    private ResponseEntity<ErrorResponse> handleChassisEntityNotFoundException(NoRecordsFetchedException ex) {
-        ErrorResponse message = new ErrorResponse(HttpStatus.NOT_FOUND.value(),ex.getError(),ex.getDescription());
-        return new ResponseEntity<>(message,HttpStatus.NOT_FOUND);
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    private ErrorResponse handleChassisEntityNotFoundException(NoRecordsFetchedException ex) {
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(),ex.getError(),ex.getDescription(),ex.getPath());
     }
 
     @ExceptionHandler(NameFormatException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    private ResponseEntity<ErrorResponse> handleChassisEntityNameFormatException(NameFormatException ex) {
-        ErrorResponse message = new ErrorResponse(HttpStatus.NOT_FOUND.value(),ex.getError(),ex.getDescription());
-        return new ResponseEntity<>(message,HttpStatus.NOT_FOUND);
+    private ErrorResponse handleChassisEntityNameFormatException(NameFormatException ex) {
+      return new ErrorResponse(HttpStatus.NOT_FOUND.value(),ex.getError(),ex.getDescription(),ex.getPath());
+
     }
 }
