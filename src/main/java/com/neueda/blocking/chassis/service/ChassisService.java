@@ -8,10 +8,12 @@ import com.neueda.blocking.chassis.repository.ChassisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Formatter;
 import java.util.List;
 
 import static com.neueda.blocking.chassis.constants.ChassisConstants.BASE_URL;
 import static com.neueda.blocking.chassis.constants.ChassisConstants.CHASSIS_URL;
+import static java.lang.String.*;
 import static org.springframework.util.StringUtils.hasText;
 
 @RequiredArgsConstructor
@@ -24,17 +26,17 @@ public class ChassisService {
     }
 
     public ChassisEntity retrieveChassisById(Long id) {
-        return chassisRepository.findById(id).orElseThrow(() -> new NoRecordsFetchedException("Chassis not found with id : " + id, BASE_URL + CHASSIS_URL + "/" + id));
+        return chassisRepository.findById(id).orElseThrow(() -> new NoRecordsFetchedException(format("Chassis not found with name: %s", valueOf(id)), format("%s%s/%s", BASE_URL, CHASSIS_URL, String.valueOf(id))));
     }
 
 
     public List<ChassisEntity> searchChassisByName(String name) {
         if (!hasText(name)) {
-            throw new NameFormatException("No Chassis with Blank value or Empty value", BASE_URL + CHASSIS_URL + "/" + name);
+            throw new NameFormatException("No Chassis with Blank value or Empty value", format("%s%s/%s", BASE_URL, CHASSIS_URL, name));
         }
         List<ChassisEntity> chassis = chassisRepository.findByName(name);
         if (chassis.isEmpty()) {
-            throw new NoRecordsFetchedException("Chassis not found with name : " + name, BASE_URL + CHASSIS_URL + "/" + name);
+            throw new NoRecordsFetchedException(format("Chassis not found with name: %s", name), format("%s%s/%s", BASE_URL, CHASSIS_URL, name));
         }
         return chassis;
     }
@@ -48,8 +50,9 @@ public class ChassisService {
 
     public void deleteChassis(Long id) {
         if (chassisRepository.findById(id).isEmpty()) {
-            throw new NoRecordsFetchedException("No records to deleted with the id:" + String.valueOf(id), BASE_URL + CHASSIS_URL + "/" + String.valueOf(id));
+            throw new NoRecordsFetchedException(format("No records to deleted with the id: %s",valueOf(id)), format("%s%s/%s", BASE_URL, CHASSIS_URL, valueOf(id)));
         }
+
         chassisRepository.deleteById(id);
 
     }

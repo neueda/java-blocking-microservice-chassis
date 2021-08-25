@@ -22,6 +22,8 @@ import java.util.List;
 
 import static com.neueda.blocking.chassis.constants.ChassisConstants.BASE_URL;
 import static com.neueda.blocking.chassis.constants.ChassisConstants.CHASSIS_URL;
+import static java.lang.String.*;
+import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.isNumeric;
 
 ;
@@ -42,7 +44,8 @@ public class ChassisController {
     @GetMapping(CHASSIS_URL + "/{id}")
     public ChassisEntity getChassisById(@PathVariable String id) {
         if (!isNumeric(id)) {
-            throw new IdFormatException("Please check the entered Id", BASE_URL + CHASSIS_URL + "/" + id);
+            throw new IdFormatException(format("Please check the entered Id : %s",valueOf(id)), format("%s%s/%s", BASE_URL, CHASSIS_URL, valueOf(id)));
+
         }
         return chassisService.retrieveChassisById(Long.valueOf(id));
 
@@ -62,7 +65,8 @@ public class ChassisController {
     @DeleteMapping({CHASSIS_URL + "/{id}"})
     public void deleteChassis(@PathVariable("id") String id) {
         if (!isNumeric(id)) {
-            throw new IdFormatException("Please check the entered Id", BASE_URL + CHASSIS_URL + "/" + id);
+
+            throw new IdFormatException(format("Please check the entered Id :%s",valueOf(id)), format("%s%s/%s", BASE_URL, CHASSIS_URL, valueOf(id)));
         }
         chassisService.deleteChassis(Long.valueOf(id));
     }
