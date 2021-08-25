@@ -42,9 +42,9 @@ public class ChassisController {
     @GetMapping(CHASSIS_URL + "/{id}")
     public ChassisEntity getChassisById(@PathVariable String id) {
         if (!isNumeric(id)) {
-            throw new IdFormatException("Please check the entered Id",BASE_URL + CHASSIS_URL + "/"+ id);
+            throw new IdFormatException("Please check the entered Id", BASE_URL + CHASSIS_URL + "/" + id);
         }
-        return chassisService.retrieveChassisById(Long.valueOf(id)) ;
+        return chassisService.retrieveChassisById(Long.valueOf(id));
 
     }
 
@@ -61,8 +61,8 @@ public class ChassisController {
 
     @DeleteMapping({CHASSIS_URL + "/{id}"})
     public void deleteChassis(@PathVariable("id") String id) {
-        if(!isNumeric(id)){
-            throw new IdFormatException("Please check the entered Id",BASE_URL + CHASSIS_URL + "/" +id);
+        if (!isNumeric(id)) {
+            throw new IdFormatException("Please check the entered Id", BASE_URL + CHASSIS_URL + "/" + id);
         }
         chassisService.deleteChassis(Long.valueOf(id));
     }
