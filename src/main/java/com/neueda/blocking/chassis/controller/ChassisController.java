@@ -1,40 +1,53 @@
 package com.neueda.blocking.chassis.controller;
 
 import com.neueda.blocking.chassis.client.GithubClient;
-import com.neueda.blocking.chassis.exception.CustomException;
+import com.neueda.blocking.chassis.entity.ChassisEntity;
 import com.neueda.blocking.chassis.exception.IdFormatException;
 import com.neueda.blocking.chassis.model.Chassis;
-import com.neueda.blocking.chassis.entity.ChassisEntity;
-import com.neueda.blocking.chassis.exception.ChassisEntityNotFoundException;
 import com.neueda.blocking.chassis.service.ChassisService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.net.http.HttpResponse;
 import java.util.List;
+
+import static com.neueda.blocking.chassis.constants.ChassisConstants.BASE_URL;
+import static com.neueda.blocking.chassis.constants.ChassisConstants.CHASSIS_URL;
+import static org.apache.commons.lang3.StringUtils.*;
+
+;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/v1")
+@RequestMapping(BASE_URL)
 public class ChassisController {
 
     private final ChassisService chassisService;
     private final GithubClient githubClient;
-    public static final String VAR_PATH = "/v1/chassis/";
 
-    @GetMapping("/chassis")
+    @GetMapping(CHASSIS_URL)
     public List<ChassisEntity> getAllChassis() {
         return chassisService.retrieveAllChassis();
     }
 
-    @GetMapping("/chassis/{id}")
+    @GetMapping(CHASSIS_URL + "/{id}")
     public ChassisEntity getChassisById(@PathVariable String id) {
-        try{
-        return chassisService.retrieveChassisById(Long.valueOf(id));
+        if (!isNumeric(id)) {
+            throw new IdFormatException("Please check the entered Id",BASE_URL + CHASSIS_URL + "/"+ id);
         }
-        catch(NumberFormatException ex) {
-            throw new IdFormatException(VAR_PATH + id, ex);
-        }
+        return chassisService.retrieveChassisById(Long.valueOf(id)) ;
+
     }
 
     @GetMapping("/chassisSearch/{name}")
@@ -42,25 +55,24 @@ public class ChassisController {
         return chassisService.searchChassisByName(name);
     }
 
-    @PostMapping("/chassis")
+    @PostMapping(CHASSIS_URL)
     @ResponseStatus(HttpStatus.CREATED)
     public ChassisEntity create(@RequestBody Chassis chassis) {
         return chassisService.addChassis(chassis);
     }
 
-    @DeleteMapping({"/chassis/{id}"})
-    public void deleteChassis(@PathVariable("id") String id) throws ChassisEntityNotFoundException {
-        try{
-            chassisService.deleteChassis(Long.valueOf(id));
+    @DeleteMapping({CHASSIS_URL + "/{id}"})
+    public void deleteChassis(@PathVariable("id") String id) {
+        if(!isNumeric(id)){
+            throw new IdFormatException("Please check the entered Id",BASE_URL + CHASSIS_URL + "/" +id);
         }
-        catch(NumberFormatException ex) {
-            throw new IdFormatException(VAR_PATH + id, ex);
-        }
+        chassisService.deleteChassis(Long.valueOf(id));
     }
 
-    @GetMapping({"chassisClientNameContain", "chassisClientNameContain/{usernamePart}"})
-    public String getChassisWebClientResponse(@PathVariable String usernamePart) throws CustomException {
-
-        return githubClient.searchUsernameContaining(usernamePart);
-    }
+//    @GetMapping({"chassisClientNameContain", "chassisClientNameContain/{usernamePart}"})
+//    public String getChassisWebClientResponse(@PathVariable String usernamePart) throws IOException, InterruptedException {
+//
+//        HttpResponse<String> response = githubClient.searchUsernameContaining(usernamePart);
+//        return response.body();
+//    }
 }

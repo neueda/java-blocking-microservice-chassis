@@ -1,12 +1,17 @@
 package com.neueda.blocking.chassis.model;
 
+import lombok.Setter;
+
+
 import static java.util.Objects.requireNonNull;
 
-public record ErrorResponse(String error, String path, String exception) {
+public record ErrorResponse(Integer statusCode, String error, String description, String path) {
 
     public ErrorResponse {
+        requireNonNull(statusCode);
         requireNonNull(error);
+        requireNonNull(description);
         requireNonNull(path);
-        requireNonNull(exception);
     }
+
 }

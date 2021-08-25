@@ -1,24 +1,16 @@
 package com.neueda.blocking.chassis.client;
-
 import com.neueda.blocking.chassis.exception.CustomException;
 import com.neueda.blocking.chassis.properties.ClientProperties;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.util.UriBuilder;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.function.Function;
-
-import static org.springframework.web.util.UriComponentsBuilder.fromUri;
 
 @RequiredArgsConstructor
-@Getter
-@Slf4j
 public class ClientHelper {
 
     private final HttpClient httpClient;
