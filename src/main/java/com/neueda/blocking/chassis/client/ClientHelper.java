@@ -2,8 +2,7 @@ package com.neueda.blocking.chassis.client;
 
 import com.neueda.blocking.chassis.exception.CustomException;
 import com.neueda.blocking.chassis.properties.ClientProperties;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.util.UriBuilder;
 
@@ -14,6 +13,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.function.Function;
 
+import static com.neueda.blocking.chassis.constants.ChassisConstants.CLIENT_URL;
 import static org.springframework.web.util.UriComponentsBuilder.fromUri;
 
 @Slf4j
@@ -27,7 +27,7 @@ public class ClientHelper {
         this.baseUrl = clientProps.baseUrl();
     }
 
-    HttpResponse<?> performGetRequest(Function<UriBuilder, URI> uriFunction) throws CustomException {
+    HttpResponse<?> performGetRequest(Function<UriBuilder, URI> uriFunction) {
         try {
             HttpRequest request = HttpRequest.newBuilder()
                     .GET()
@@ -40,7 +40,7 @@ public class ClientHelper {
 
         catch (IOException | InterruptedException e) {
             log.error("this thread is interrupted or i/o error", e);
-            return (HttpResponse<?>) new CustomException("An error has occurred", e, "v1/chassisClientNameContain");
+            throw  new CustomException( e.getMessage(), CLIENT_URL);
         }
     }
 }
