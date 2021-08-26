@@ -1,15 +1,13 @@
 package com.neueda.blocking.chassis.exception;
 
-public class IdFormatException extends NumberFormatException {
+public class IdFormatException extends FatalException {
 
-    private final String path;
 
-    public IdFormatException(String path, NumberFormatException cause) {
-        super(cause.getLocalizedMessage() + ". Chassis id in a wrong format");
-        this.path = path;
+    public IdFormatException(String message, String path) {
+        super("Please enter a valid Id", message, path);
     }
 
-    public String getPath() {
-        return path;
+    public IdFormatException(String path, NumberFormatException cause) {
+        super("Please enter a valid Id", "Please check the entered Id", path, cause);
     }
 }
