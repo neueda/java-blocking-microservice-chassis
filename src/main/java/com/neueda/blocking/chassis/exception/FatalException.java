@@ -1,29 +1,28 @@
 package com.neueda.blocking.chassis.exception;
 
-import liquibase.pro.packaged.L;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
 
 @Getter
-public class FatalException extends RuntimeException{
+@RequiredArgsConstructor
+public class FatalException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
-    private String error;
-    private String description;
-    private String path;
 
-    public FatalException(){super();}
+    @NonNull
+    private final String error;
+    @NonNull
+    private final String description;
+    @NonNull
+    private final String path;
 
-    public FatalException(String error, String description, String path){
-        super(description);
-    this.error = error;
-    this.description = description;
-    this.path = path;
+    public FatalException(String error, String description, String path, Throwable cause) {
+        super(cause);
+        this.path = path;
+        this.error = error;
+        this.description = description;
     }
-
-    public FatalException(String error, Throwable cause){
-      super(error,cause);
-    }
-
 
 }

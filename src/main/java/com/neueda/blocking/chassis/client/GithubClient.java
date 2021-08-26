@@ -1,10 +1,13 @@
 package com.neueda.blocking.chassis.client;
 
-import java.net.http.HttpResponse;
-
 import com.neueda.blocking.chassis.properties.ClientProperties;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpResponse;
 
 @Service
 public class GithubClient {
@@ -23,4 +26,3 @@ public class GithubClient {
         return clientHelper.performGetRequest(URI.create(baseUrl + "/search/users?q=" + value + "+repos:%3E0"));
     }
 }
-
