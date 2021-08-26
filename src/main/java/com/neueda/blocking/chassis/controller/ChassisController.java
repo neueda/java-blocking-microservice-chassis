@@ -74,7 +74,6 @@ public class ChassisController {
     @GetMapping({"chassisClientNameContain", "chassisClientNameContain/{usernamePart}"})
     public String getChassisWebClientResponse(@PathVariable String usernamePart) throws IOException, InterruptedException {
 
-        HttpResponse<String> response = githubClient.searchUsernameContaining(usernamePart);
-        return response.body();
+        return githubClient.searchUsernameContaining(usernamePart);
     }
 }
