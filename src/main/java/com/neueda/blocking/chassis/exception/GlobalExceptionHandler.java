@@ -14,19 +14,19 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IdFormatException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     private ErrorResponse handleNumberFormatError(IdFormatException ex) {
-        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(),ex.getError(),ex.getDescription(), ex.getPath());
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getError(), ex.getDescription(), ex.getPath());
     }
 
     @ExceptionHandler(NoRecordsFetchedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     private ErrorResponse handleChassisEntityNotFoundException(NoRecordsFetchedException ex) {
-        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(),ex.getError(),ex.getDescription(),ex.getPath());
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getError(), ex.getDescription(), ex.getPath());
     }
 
     @ExceptionHandler(NameFormatException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     private ErrorResponse handleChassisEntityNameFormatException(NameFormatException ex) {
-      return new ErrorResponse(HttpStatus.NOT_FOUND.value(),ex.getError(),ex.getDescription(),ex.getPath());
+        return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getError(), ex.getDescription(), ex.getPath());
 
     }
 }

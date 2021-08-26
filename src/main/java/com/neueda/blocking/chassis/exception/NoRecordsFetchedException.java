@@ -6,4 +6,8 @@ public class NoRecordsFetchedException extends FatalException {
         super("No records Fetched", message, path);
     }
 
+    public NoRecordsFetchedException(String path, Throwable cause) {
+        super("Please enter a valid name", "Please check the entered name", path, cause);
+    }
+
 }
