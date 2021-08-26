@@ -16,8 +16,6 @@ import java.util.function.Function;
 
 import static org.springframework.web.util.UriComponentsBuilder.fromUri;
 
-@RequiredArgsConstructor
-@Getter
 @Slf4j
 public class ClientHelper {
 
