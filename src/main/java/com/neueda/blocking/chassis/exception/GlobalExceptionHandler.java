@@ -14,24 +14,19 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IdFormatException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     private ErrorResponse handleNumberFormatError(IdFormatException ex) {
-        return logAndRespond(ex, ex.getPath());
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getError(), ex.getDescription(), ex.getPath());
     }
 
-    @ExceptionHandler(ChassisEntityNotFoundException.class)
+    @ExceptionHandler(NoRecordsFetchedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    private ErrorResponse handleChassisEntityNotFoundException(NoRecordsFetchedException ex) {
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getError(), ex.getDescription(), ex.getPath());
+    }
+
+    @ExceptionHandler(NameFormatException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    private ErrorResponse handleChassisEntityNotFoundException(ChassisEntityNotFoundException ex) {
-        return logAndRespond(ex, ex.getPath());
-    }
-    @ExceptionHandler(CustomException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    private ErrorResponse handleCustomException(CustomException ex) {
-        return logAndRespond(ex, ex.getPath());
-    }
-    private ErrorResponse logAndRespond(Exception ex, String path) {
-        String errorMsg = ex.getLocalizedMessage();
-        log.error(errorMsg, ex);
+    private ErrorResponse handleChassisEntityNameFormatException(NameFormatException ex) {
+        return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getError(), ex.getDescription(), ex.getPath());
 
-        return new ErrorResponse(errorMsg, path, ex.getClass().getTypeName());
     }
-
 }
