@@ -1,16 +1,16 @@
 package com.neueda.blocking.chassis.exception;
 
-public class CustomException extends Exception {
+public class CustomException extends FatalException {
 
-    private final String path;
+    public CustomException(String message, String path) {
 
-    public CustomException(String message, Exception e, String path) {
-        super(message);
-        this.path = path;
+        super("No records with the given name", message, path);
+
     }
 
-    public String getPath() {
-        return path;
-    }
+    public CustomException(String path, IllegalArgumentException cause) {
 
+        super("Please enter a valid name", "Please check the entered name", path, cause);
+
+    }
 }
