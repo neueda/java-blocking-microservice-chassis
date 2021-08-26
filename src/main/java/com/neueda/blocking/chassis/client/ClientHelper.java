@@ -27,20 +27,22 @@ public class ClientHelper {
         this.baseUrl = clientProps.baseUrl();
     }
 
-    HttpResponse<?> performGetRequest(Function<UriBuilder, URI> uriFunction) {
+    <T> T performGetRequest(Function<UriBuilder, URI> uriFunction) {
+        T res = null;
         try {
             HttpRequest request = HttpRequest.newBuilder()
                     .GET()
                     .header("accept", "application/json")
                     .uri(uriFunction.apply(fromUri(baseUrl)))
                     .build();
+            res =  (T) httpClient.send(request,HttpResponse.BodyHandlers.ofString());
 
-            return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         }
-
         catch (IOException | InterruptedException e) {
-            log.error("this thread is interrupted or i/o error", e);
-            throw  new CustomException( e.getMessage(), CLIENT_URL);
+
+            throw new CustomException(e.getMessage(), CLIENT_URL);
         }
+
+        return res;
     }
 }
