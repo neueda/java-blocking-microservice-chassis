@@ -5,10 +5,12 @@ import com.github.tomakehurst.wiremock.client.WireMock;
 import com.neueda.blocking.chassis.exception.CustomException;
 import com.neueda.blocking.chassis.properties.ClientProperties;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.net.URI;
 
@@ -20,19 +22,14 @@ import static java.lang.String.format;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+@SpringJUnitConfig
+@AutoConfigureWireMock
 public class GithubClientTests {
 
     private static GithubClient client;
 
-    private static final int PORT = 8080;
-    private static final String HOST = "localhost";
-
-    private static WireMockServer server = new WireMockServer(PORT);
-
     @BeforeAll
-    public static void setup() {
-        server.start();
-        WireMock.configureFor(HOST, PORT);
+    static void init(@Autowired WireMockServer server){
         URI baseUri = URI.create(server.baseUrl());
         client = new GithubClient(new ClientProperties(baseUri));
     }
@@ -57,13 +54,6 @@ public class GithubClientTests {
         //then
         verify(getRequestedFor(urlEqualTo(testUrl)));
 
-    }
-
-    @AfterAll
-    public static void teardown() {
-        if(null != server && server.isRunning()){
-            server.shutdownServer();
-        }
     }
 
 }
