@@ -31,18 +31,16 @@ public class GithubClientTests {
 
     @BeforeAll
     public static void setup() {
-
         server.start();
         WireMock.configureFor(HOST, PORT);
         URI baseUri = URI.create(server.baseUrl());
         client = new GithubClient(new ClientProperties(baseUri));
-
     }
 
     @Test
     @DisplayName("Should return no user found")
     void shouldReturnNoUsersFound() throws CustomException {
-
+        //given
         var testValue = "testuser";
         var testUrl = format("/search/users?q=%s+repos:%%3E0", testValue);
         var expected = "{\"total_count\":0,\"incomplete_results\":false,\"items\":[]}";
@@ -53,10 +51,14 @@ public class GithubClientTests {
                                 .withBody(expected))
         );
 
+        //when
         client.searchUsernameContaining(testValue);
+
+        //then
         verify(getRequestedFor(urlEqualTo(testUrl)));
 
     }
+
     @AfterAll
     public static void teardown() {
         if(null != server && server.isRunning()){
