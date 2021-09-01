@@ -12,7 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.net.URI;
 
@@ -54,6 +53,7 @@ public class GithubClientTests {
         client.searchUsernameContaining(testValue);
 
         //then
+        assert(client.searchUsernameContaining(testValue).contentEquals(expected));
         verify(getRequestedFor(urlEqualTo(testUrl)));
 
     }
