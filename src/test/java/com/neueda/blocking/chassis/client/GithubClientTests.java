@@ -1,7 +1,6 @@
 package com.neueda.blocking.chassis.client;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.client.WireMock;
 import com.neueda.blocking.chassis.exception.CustomException;
 import com.neueda.blocking.chassis.properties.ClientProperties;
 
@@ -16,10 +15,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.net.URI;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static java.lang.String.format;
+import static org.assertj.core.api.BDDAssertions.then;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -42,20 +44,17 @@ public class GithubClientTests {
         var testValue = "testuser";
         var testUrl = format("/search/users?q=%s+repos:%%3E0", testValue);
         var expected = "{\"total_count\":0,\"incomplete_results\":false,\"items\":[]}";
-        WireMock.stubFor(
-                WireMock.get(testUrl)
-                        .willReturn(aResponse()
-                                .withHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
-                                .withBody(expected))
-        );
+        stubFor(get(testUrl)
+                .willReturn(aResponse()
+                        .withHeader(CONTENT_TYPE, APPLICATION_JSON_VALUE)
+                        .withBody(expected)));
 
         //when
-        client.searchUsernameContaining(testValue);
+        var response = client.searchUsernameContaining(testValue);
 
         //then
-        assert(client.searchUsernameContaining(testValue).contentEquals(expected));
+        then(response).isEqualTo(expected);
         verify(getRequestedFor(urlEqualTo(testUrl)));
-
     }
 
 }
