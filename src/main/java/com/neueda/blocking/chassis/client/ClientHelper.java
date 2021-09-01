@@ -39,7 +39,7 @@ public class ClientHelper {
 
         }
         catch (IOException | InterruptedException e) {
-
+            log.error("this thread is interrupted or i/o error", e);
             throw new CustomException(e.getMessage(), CLIENT_URL);
         }
 
