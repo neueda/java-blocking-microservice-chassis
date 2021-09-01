@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(InputFormatException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus()
     private ErrorResponse handleNumberFormatError(InputFormatException ex) {
         return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getError(), ex.getDescription(), ex.getPath());
     }
