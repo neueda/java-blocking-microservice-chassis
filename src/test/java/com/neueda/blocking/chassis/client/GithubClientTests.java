@@ -1,7 +1,7 @@
 package com.neueda.blocking.chassis.client;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
-import com.neueda.blocking.chassis.exception.CustomException;
+
 import com.neueda.blocking.chassis.properties.ClientProperties;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -39,7 +39,7 @@ public class GithubClientTests {
 
     @Test
     @DisplayName("Should return no user found")
-    void shouldReturnNoUsersFound() throws CustomException {
+    void shouldReturnNoUsersFound() {
         //given
         var testValue = "testuser";
         var testUrl = format("/search/users?q=%s+repos:%%3E0", testValue);
