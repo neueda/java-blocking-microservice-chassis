@@ -2,6 +2,7 @@ package com.neueda.blocking.chassis.controller;
 
 import com.neueda.blocking.chassis.client.GithubClient;
 import com.neueda.blocking.chassis.entity.ChassisEntity;
+
 import com.neueda.blocking.chassis.exception.IdFormatException;
 import com.neueda.blocking.chassis.model.Chassis;
 import com.neueda.blocking.chassis.service.ChassisService;
@@ -67,7 +68,6 @@ public class ChassisController {
 
     @GetMapping({"chassisClientNameContain", "chassisClientNameContain/{usernamePart}"})
     public String getChassisWebClientResponse(@PathVariable String usernamePart) {
-
         return githubClient.searchUsernameContaining(usernamePart);
     }
 

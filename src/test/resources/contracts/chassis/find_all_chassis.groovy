@@ -9,7 +9,6 @@ Contract.make {
         url "/api/v1/chassis"
         method GET()
     }
-
     response {
         status OK()
         headers {
