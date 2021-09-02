@@ -4,8 +4,6 @@ import com.neueda.blocking.chassis.properties.ClientProperties;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
-import java.net.http.HttpResponse;
-
 @Service
 public class GithubClient {
 
@@ -17,11 +15,12 @@ public class GithubClient {
 
     public String searchUsernameContaining(@NonNull String value) {
 
-        HttpResponse<?> response = clientHelper.performGetRequest(uriBuilder -> uriBuilder
+        String response = clientHelper.performGetRequest(uriBuilder -> uriBuilder
                 .pathSegment("search")
                 .pathSegment("users")
                 .queryParam("q", value.concat("+repos:>0"))
-                .build());
-        return response.body().toString();
+                .build(), String.class);
+        return response;
     }
+
 }
