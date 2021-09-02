@@ -42,6 +42,7 @@ public class ChassisController {
     @GetMapping(CHASSIS_URL + "/{id}")
     public ChassisEntity getChassisById(@PathVariable String id) {
         if (!isNumeric(id)) {
+
             throw new InputFormatException(format("Please check the entered Id : %s", valueOf(id)), format("%s%s/%s", BASE_URL, CHASSIS_URL, valueOf(id)));
 
 
@@ -66,7 +67,9 @@ public class ChassisController {
         if (!isNumeric(id)) {
 
 
+
             throw new InputFormatException(format("Please check the entered Id :%s", valueOf(id)), format("%s%s/%s", BASE_URL, CHASSIS_URL, valueOf(id)));
+
 
         }
         chassisService.deleteChassis(Long.valueOf(id));
@@ -74,6 +77,7 @@ public class ChassisController {
 
     @GetMapping({"chassisClientNameContain", "chassisClientNameContain/{usernamePart}"})
     public String getChassisWebClientResponse(@PathVariable String usernamePart) {
+
         return githubClient.searchUsernameContaining(usernamePart);
     }
 

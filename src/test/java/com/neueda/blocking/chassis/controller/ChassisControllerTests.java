@@ -47,7 +47,7 @@ class ChassisControllerTests {
     @MockBean
     private GithubClient gitHubClient;
 
-    
+
     @MockBean
     private ChassisRepository chassisRepository;
 
@@ -75,8 +75,8 @@ class ChassisControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(expected))).andDo(print())
                 .andDo(document("{testGetAllChassis}",
-                preprocessRequest(prettyPrint()),
-                preprocessResponse(prettyPrint())));
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint())));
 
     }
 
@@ -185,8 +185,8 @@ class ChassisControllerTests {
                         //then
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(chassis)))
-                        .andExpect(status().isCreated()).andDo(print())
-                        .andDo(document("{testCreate}",
+                .andExpect(status().isCreated()).andDo(print())
+                .andDo(document("{testCreate}",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint())));
     }
