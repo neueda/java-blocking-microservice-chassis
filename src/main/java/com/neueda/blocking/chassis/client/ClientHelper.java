@@ -2,6 +2,9 @@ package com.neueda.blocking.chassis.client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.neueda.blocking.chassis.properties.ClientProperties;
 
+
+
+
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.client.RestClientException;
@@ -21,6 +24,7 @@ public class ClientHelper {
     private final HttpClient httpClient;
     private final URI baseUrl;
     private final ObjectMapper objectMapper;
+
 
     ClientHelper(ClientProperties clientProps) {
         this.httpClient = HttpClient.newHttpClient();

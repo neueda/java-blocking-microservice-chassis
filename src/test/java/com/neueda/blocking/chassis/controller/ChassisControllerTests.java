@@ -78,7 +78,6 @@ class ChassisControllerTests {
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint())));
 
-
     }
 
     @Test

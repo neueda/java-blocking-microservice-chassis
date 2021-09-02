@@ -1,5 +1,6 @@
 package com.neueda.blocking.chassis.exception;
 
+
 public class CustomException extends Exception {
 
     private final String path;
@@ -14,3 +15,4 @@ public class CustomException extends Exception {
     }
 
 }
+

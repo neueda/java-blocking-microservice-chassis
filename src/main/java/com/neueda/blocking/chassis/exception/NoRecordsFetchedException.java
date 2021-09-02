@@ -1,6 +1,6 @@
 package com.neueda.blocking.chassis.exception;
 
-public class NoRecordsFetchedException extends FatalException {
+public class NoRecordsFetchedException extends ExceptionHandler {
 
     public NoRecordsFetchedException(String message, String path) {
         super("No records Fetched", message, path);
