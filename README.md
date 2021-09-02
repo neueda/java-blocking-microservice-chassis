@@ -61,7 +61,7 @@ $ docker compose down
 #### Testing
 - [Spring Boot Test](https://docs.spring.io/spring-framework/docs/5.3.9/reference/html/testing.html)
 - [TestContainers](https://www.testcontainers.org/)
-- [WireMock Test] (http://wiremock.org/docs/getting-started/)
+- [WireMock Test](http://wiremock.org/docs/getting-started/)
 #### Containerization
 - [Layered Jar](https://docs.spring.io/spring-boot/docs/2.5.3/maven-plugin/reference/htmlsingle/#packaging.layers)
 ## Contributing
