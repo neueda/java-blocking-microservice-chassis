@@ -208,15 +208,4 @@ class ChassisControllerTests {
                         preprocessResponse(prettyPrint())));
     }
 
-    // ToDo: This is just a exception test example it have to be replaced by a real method test
-    //when(chassisService.retrieveAllChassis())
-    //       .thenThrow(IllegalArgumentException.class);
-
-    // when
-    //ThrowingCallable methodUnderTest = () -> chassisService.retrieveAllChassis();
-
-    // then
-    //BDDAssertions.thenThrownBy(methodUnderTest)
-    //      .isInstanceOf(IllegalArgumentException.class);
-
 }

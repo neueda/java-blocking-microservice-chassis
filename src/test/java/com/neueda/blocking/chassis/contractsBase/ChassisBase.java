@@ -43,4 +43,3 @@ public abstract class ChassisBase {
                 .willReturn(response);
     }
 }
-
