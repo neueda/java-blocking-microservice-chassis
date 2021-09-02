@@ -13,7 +13,6 @@ import java.util.List;
 import static com.neueda.blocking.chassis.constants.ChassisConstants.BASE_URL;
 import static com.neueda.blocking.chassis.constants.ChassisConstants.CHASSIS_URL;
 import static java.lang.String.format;
-import static java.lang.String.valueOf;
 import static org.springframework.util.StringUtils.hasText;
 
 @RequiredArgsConstructor
@@ -26,9 +25,8 @@ public class ChassisService {
     }
 
     public ChassisEntity retrieveChassisById(Long id) {
-        return chassisRepository.findById(id).orElseThrow(() -> new NoRecordsFetchedException(format("Chassis not found with name: %s", valueOf(id)), format("%s%s/%s", BASE_URL, CHASSIS_URL, String.valueOf(id))));
+        return chassisRepository.findById(id).orElseThrow(() -> new NoRecordsFetchedException(format("Chassis not found with name: %s", id), format("%s%s/%s", BASE_URL, CHASSIS_URL, id)));
     }
-
 
     public List<ChassisEntity> searchChassisByName(String name) {
         if (!hasText(name)) {
@@ -50,10 +48,9 @@ public class ChassisService {
 
     public void deleteChassis(Long id) {
         if (chassisRepository.findById(id).isEmpty()) {
-            throw new NoRecordsFetchedException(format("No records to deleted with the id: %s",valueOf(id)), format("%s%s/%s", BASE_URL, CHASSIS_URL, valueOf(id)));
+            throw new NoRecordsFetchedException(format("No records to deleted with the id: %s", id), format("%s%s/%s", BASE_URL, CHASSIS_URL, id));
         }
-
         chassisRepository.deleteById(id);
-
     }
+
 }
