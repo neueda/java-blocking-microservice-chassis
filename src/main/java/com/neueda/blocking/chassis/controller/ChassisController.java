@@ -3,7 +3,8 @@ package com.neueda.blocking.chassis.controller;
 import com.neueda.blocking.chassis.client.GithubClient;
 import com.neueda.blocking.chassis.entity.ChassisEntity;
 
-import com.neueda.blocking.chassis.exception.IdFormatException;
+import com.neueda.blocking.chassis.exception.InputFormatException;
+
 import com.neueda.blocking.chassis.model.Chassis;
 import com.neueda.blocking.chassis.service.ChassisService;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +42,9 @@ public class ChassisController {
     @GetMapping(CHASSIS_URL + "/{id}")
     public ChassisEntity getChassisById(@PathVariable String id) {
         if (!isNumeric(id)) {
-            throw new IdFormatException(format("Please check the entered Id : %s", valueOf(id)), format("%s%s/%s", BASE_URL, CHASSIS_URL, valueOf(id)));
+            throw new InputFormatException(format("Please check the entered Id : %s", valueOf(id)), format("%s%s/%s", BASE_URL, CHASSIS_URL, valueOf(id)));
+
+
         }
         return chassisService.retrieveChassisById(Long.valueOf(id));
 
@@ -61,7 +64,10 @@ public class ChassisController {
     @DeleteMapping({CHASSIS_URL + "/{id}"})
     public void deleteChassis(@PathVariable("id") String id) {
         if (!isNumeric(id)) {
-            throw new IdFormatException(format("Please check the entered Id :%s", valueOf(id)), format("%s%s/%s", BASE_URL, CHASSIS_URL, valueOf(id)));
+
+
+            throw new InputFormatException(format("Please check the entered Id :%s", valueOf(id)), format("%s%s/%s", BASE_URL, CHASSIS_URL, valueOf(id)));
+
         }
         chassisService.deleteChassis(Long.valueOf(id));
     }

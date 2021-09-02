@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class FatalException extends RuntimeException {
+public class ExceptionHandler extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,7 +18,7 @@ public class FatalException extends RuntimeException {
     @NonNull
     private final String path;
 
-    public FatalException(String error, String description, String path, Throwable cause) {
+    public ExceptionHandler(String error, String description, String path, Throwable cause) {
         super(cause);
         this.path = path;
         this.error = error;

@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(IdFormatException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    private ErrorResponse handleNumberFormatError(IdFormatException ex) {
+    @ExceptionHandler(InputFormatException.class)
+    @ResponseStatus()
+    private ErrorResponse handleNumberFormatError(InputFormatException ex) {
         return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getError(), ex.getDescription(), ex.getPath());
     }
 
@@ -23,10 +23,4 @@ public class GlobalExceptionHandler {
         return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getError(), ex.getDescription(), ex.getPath());
     }
 
-    @ExceptionHandler(NameFormatException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    private ErrorResponse handleChassisEntityNameFormatException(NameFormatException ex) {
-        return new ErrorResponse(HttpStatus.NOT_FOUND.value(), ex.getError(), ex.getDescription(), ex.getPath());
-
-    }
 }

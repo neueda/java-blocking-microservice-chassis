@@ -1,7 +1,7 @@
 package com.neueda.blocking.chassis.service;
 
 import com.neueda.blocking.chassis.entity.ChassisEntity;
-import com.neueda.blocking.chassis.exception.NameFormatException;
+import com.neueda.blocking.chassis.exception.InputFormatException;
 import com.neueda.blocking.chassis.exception.NoRecordsFetchedException;
 import com.neueda.blocking.chassis.model.Chassis;
 import com.neueda.blocking.chassis.repository.ChassisRepository;
@@ -32,7 +32,7 @@ public class ChassisService {
 
     public List<ChassisEntity> searchChassisByName(String name) {
         if (!hasText(name)) {
-            throw new NameFormatException("No Chassis with Blank value or Empty value", format("%s%s/%s", BASE_URL, CHASSIS_URL, name));
+            throw new InputFormatException("No Chassis with Blank value or Empty value", format("%s%s/%s", BASE_URL, CHASSIS_URL, name));
         }
         List<ChassisEntity> chassis = chassisRepository.findByName(name);
         if (chassis.isEmpty()) {
