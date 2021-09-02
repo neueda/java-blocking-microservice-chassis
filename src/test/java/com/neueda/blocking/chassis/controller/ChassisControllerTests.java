@@ -47,7 +47,7 @@ class ChassisControllerTests {
     @MockBean
     private GithubClient gitHubClient;
 
-    
+
     @MockBean
     private ChassisRepository chassisRepository;
 
@@ -70,13 +70,13 @@ class ChassisControllerTests {
         final List<Chassis> expected = List.of(chassis1, chassis2);
 
         //when
-        mockMvc.perform(get("/v1/chassis"))
+        mockMvc.perform(get("/api/v1/chassis"))
                 //then
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(expected))).andDo(print())
                 .andDo(document("{testGetAllChassis}",
-                preprocessRequest(prettyPrint()),
-                preprocessResponse(prettyPrint())));
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint())));
 
 
     }
@@ -88,7 +88,7 @@ class ChassisControllerTests {
         when(chassisService.retrieveAllChassis()).thenReturn(null);
 
         //when
-        mockMvc.perform(get("/v1/chassis"))
+        mockMvc.perform(get("/api/v1/chassis"))
                 //then
                 .andExpect(status().isOk()).andDo(print())
                 .andDo(document("{testGetAllChassis_EntityNotFound}",
@@ -106,7 +106,7 @@ class ChassisControllerTests {
         final Chassis expected = new Chassis(name, description);
 
         //when
-        mockMvc.perform(get("/v1/chassis/5"))
+        mockMvc.perform(get("/api/v1/chassis/5"))
                 //then
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(expected))).andDo(print())
@@ -122,7 +122,7 @@ class ChassisControllerTests {
         when(chassisService.retrieveChassisById(5L)).thenReturn(null);
 
         //when
-        mockMvc.perform(get("/v1/chassis/5"))
+        mockMvc.perform(get("/api/v1/chassis/5"))
                 //then
                 .andExpect(status().isOk()).andDo(print())
                 .andDo(document("{testGetChassisById_EntityNotFound}",
@@ -149,7 +149,7 @@ class ChassisControllerTests {
         final List<Chassis> expected = List.of(chassis1, chassis2);
 
         //when
-        mockMvc.perform(get("/v1/chassisSearch/" + name))
+        mockMvc.perform(get("/api/v1/chassisSearch/" + name))
                 //then
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(expected))).andDo(print())
@@ -166,7 +166,7 @@ class ChassisControllerTests {
         when(chassisService.searchChassisByName(name)).thenReturn(null);
 
         //when
-        mockMvc.perform(get("/v1/chassisSearch/name"))
+        mockMvc.perform(get("/api/v1/chassisSearch/name"))
                 //then
                 .andExpect(status().isOk()).andDo(print())
                 .andDo(document("{testGetChassisByName_EntityNotFound}",
@@ -182,12 +182,12 @@ class ChassisControllerTests {
         when(chassisService.addChassis(new Chassis("name 6","description 6"))).thenReturn( new ChassisEntity(6L,"name 6","description 6"));
 
         //when
-        mockMvc.perform(post("/v1/chassis")
+        mockMvc.perform(post("/api/v1/chassis")
                         //then
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(chassis)))
-                        .andExpect(status().isCreated()).andDo(print())
-                        .andDo(document("{testCreate}",
+                .andExpect(status().isCreated()).andDo(print())
+                .andDo(document("{testCreate}",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint())));
     }
@@ -200,7 +200,7 @@ class ChassisControllerTests {
         doNothing().when(chassisService).deleteChassis(chassisEntity.getId());
 
         //when
-        mockMvc.perform(delete("/v1/chassis/6").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(delete("/api/v1/chassis/6").contentType(MediaType.APPLICATION_JSON))
                 //then
                 .andExpect(status().isOk()).andDo(print())
                 .andDo(document("{testDeleteChassis}",
