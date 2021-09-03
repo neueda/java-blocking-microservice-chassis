@@ -32,8 +32,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
-
 @WebMvcTest(ChassisController.class)
 @AutoConfigureRestDocs(outputDir = "target/generated-snippets")
 class ChassisControllerTests {

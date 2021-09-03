@@ -6,7 +6,6 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 
-
 @Slf4j
 public class PostgresTestContainer {
 

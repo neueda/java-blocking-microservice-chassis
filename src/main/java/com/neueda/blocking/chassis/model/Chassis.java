@@ -18,4 +18,5 @@ public record Chassis(
     public Chassis(String name) {
         this(name, null);
     }
+
 }
