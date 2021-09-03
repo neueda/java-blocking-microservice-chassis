@@ -21,7 +21,10 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 import static com.neueda.blocking.chassis.constants.ChassisConstants.BASE_URL;
+import static com.neueda.blocking.chassis.constants.ChassisConstants.CHASSIS_SEARCH_BY_NAME;
 import static com.neueda.blocking.chassis.constants.ChassisConstants.CHASSIS_URL;
+import static com.neueda.blocking.chassis.constants.ChassisConstants.CHASSIS_URL_WITH_ID;
+import static com.neueda.blocking.chassis.constants.ChassisConstants.CLIENT_URL;
 import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.isNumeric;
 
@@ -38,15 +41,15 @@ public class ChassisController {
         return chassisService.retrieveAllChassis();
     }
 
-    @GetMapping(CHASSIS_URL + "/{id}")
+    @GetMapping(CHASSIS_URL_WITH_ID)
     public ChassisEntity getChassisById(@PathVariable String id) {
         if (!isNumeric(id)) {
-            throw new InputFormatException(format("Please check the entered Id : %s", id), format("%s%s/%s", BASE_URL, CHASSIS_URL, id));
+            throw new InputFormatException(format("Please check the entered Id : %s", id), format("%s%s", BASE_URL, CHASSIS_URL_WITH_ID));
         }
         return chassisService.retrieveChassisById(Long.valueOf(id));
     }
 
-    @GetMapping("/chassisSearch/{name}")
+    @GetMapping(CHASSIS_SEARCH_BY_NAME)
     public List<ChassisEntity> getChassisByName(@PathVariable String name) {
         return chassisService.searchChassisByName(name);
     }
@@ -57,15 +60,15 @@ public class ChassisController {
         return chassisService.addChassis(chassis);
     }
 
-    @DeleteMapping({CHASSIS_URL + "/{id}"})
+    @DeleteMapping({CHASSIS_URL_WITH_ID})
     public void deleteChassis(@PathVariable("id") String id) {
         if (!isNumeric(id)) {
-            throw new InputFormatException(format("Please check the entered Id :%s", id), format("%s%s/%s", BASE_URL, CHASSIS_URL, id));
+            throw new InputFormatException(format("Please check the entered Id :%s", id), format("%s%s", BASE_URL, CHASSIS_URL_WITH_ID));
         }
         chassisService.deleteChassis(Long.valueOf(id));
     }
 
-    @GetMapping({"chassisClientNameContain", "chassisClientNameContain/{usernamePart}"})
+    @GetMapping(CLIENT_URL)
     public String getChassisWebClientResponse(@PathVariable String usernamePart) {
         return githubClient.searchUsernameContaining(usernamePart);
     }
