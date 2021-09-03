@@ -154,15 +154,7 @@
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.github.mizosoft.methanol</groupId>
-			<artifactId>methanol</artifactId>
-			<version>1.6.0</version>
-		</dependency>
+
 	</dependencies>
 
 	<dependencyManagement>
