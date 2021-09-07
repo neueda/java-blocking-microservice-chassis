@@ -1,7 +1,6 @@
 package com.neueda.blocking.chassis.client;
 import com.github.tomakehurst.wiremock.WireMockServer;
 
-
 import com.neueda.blocking.chassis.properties.ClientProperties;
 
 import org.junit.jupiter.api.BeforeAll;

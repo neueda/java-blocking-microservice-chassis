@@ -1,7 +1,6 @@
 package com.neueda.blocking.chassis.exception;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Getter

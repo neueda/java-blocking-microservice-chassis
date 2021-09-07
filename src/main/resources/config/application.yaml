@@ -24,7 +24,6 @@ spring:
     username: ${app.username:sa}
     password: ${app.password}
 
-
   jpa:
     show-sql: true
     generate-ddl: true
