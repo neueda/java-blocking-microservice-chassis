@@ -1,1 +1,1 @@
-jdbc:h2:mem:chassisdb
+jdbc:h2:mem:chassisdb?options=DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false

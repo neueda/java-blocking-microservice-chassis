@@ -23,7 +23,7 @@ spring:
     url: ${app.database}
     username: ${app.username:sa}
     password: ${app.password}
-    driverClassName: org.h2.Driver
+
 
   jpa:
     show-sql: true
