@@ -15,7 +15,7 @@ public class ExceptionHandler extends RuntimeException {
     private final String description;
     private final String path;
 
-    public ExceptionHandler(@NonNull String error,@NonNull String description,@NonNull String path, Throwable cause) {
+    public ExceptionHandler(String error,String description,String path, Throwable cause) {
         super(cause);
         this.path = path;
         this.error = error;
