@@ -25,7 +25,7 @@ public class ChassisService {
     }
 
     public ChassisEntity retrieveChassisById(Long id) {
-        return chassisRepository.findById(id).orElseThrow(() -> new NoRecordsFetchedException(format("Chassis not found with name: %s", id), format("%s%s/%s", BASE_URL, CHASSIS_URL, id)));
+        return chassisRepository.findById(id).orElseThrow(() -> new NoRecordsFetchedException(format("Chassis not found with id: %s", id), format("%s%s/%s", BASE_URL, CHASSIS_URL, id)));
     }
 
     public List<ChassisEntity> searchChassisByName(String name) {
