@@ -2,9 +2,6 @@ package com.neueda.blocking.chassis.client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.neueda.blocking.chassis.properties.ClientProperties;
 
-
-
-
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.client.RestClientException;
