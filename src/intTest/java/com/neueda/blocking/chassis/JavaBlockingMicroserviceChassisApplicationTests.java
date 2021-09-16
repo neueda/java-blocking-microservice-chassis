@@ -8,6 +8,7 @@ class JavaBlockingMicroserviceChassisApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }
