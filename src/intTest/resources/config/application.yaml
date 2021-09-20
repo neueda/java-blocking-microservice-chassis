@@ -1,0 +1,57 @@
+spring:
+  main:
+    banner-mode: off
+
+  h2:
+    console:
+      enabled: on
+
+  sql:
+    init:
+      mode: never
+
+  liquibase:
+    enabled: false
+    change-log: "classpath:/db/changelog/db.changelog-master.xml"
+    test-rollback-on-update: on
+
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+
+  codec:
+    log-request-details: on
+
+server:
+  error:
+    include-exception: on
+    include-stacktrace: always
+
+client:
+  base-url: https://mock.server.com
+
+springdoc:
+  api-docs:
+    enabled: off
+
+apidoc:
+  title: Java Blocking Microservice Test
+  description: Microservice Test for Blocking Restful API with Spring Boot
+  version: Test
+
+debug: off
+trace: off
+logging:
+  level:
+    root: error
+    web: trace
+    sql: trace
+    org:
+      springframework:
+        jdbc:
+          datasource: trace
+    liquibase:
+      database: trace
+

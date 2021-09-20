@@ -1,6 +1,8 @@
 import org.springframework.cloud.contract.verifier.config.TestFramework
 //plugins
 plugins {
+    // Core
+    id 'jacoco'
 
     // Spring
     id 'org.springframework.boot'
@@ -13,8 +15,8 @@ plugins {
     id 'org.asciidoctor.jvm.convert'
     id 'com.github.johnrengelman.processes'
 
-    //    id 'maven-publish'
-    id 'java'
+    // Tests
+    id 'com.adarshr.test-logger'
 }
 
 group = 'com.neueda.java-blocking-microservice-chassis'
@@ -60,10 +62,6 @@ repositories {
     mavenCentral()
     maven { url 'https://repo.spring.io/release' }
 }
-repositories {
-    mavenCentral()
-    maven { url 'https://repo.spring.io/release' }
-}
 
 dependencyManagement {
     imports {
@@ -92,8 +90,8 @@ dependencies {
     implementation 'io.swagger.core.v3:swagger-models:2.1.9'
 
     // Development Tools used to develop an application
-    implementation 'org.projectlombok:lombok:1.18.20'
-    implementation 'org.springframework.boot:spring-boot-starter-validation:2.5.3'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.springframework.boot:spring-boot-starter-validation:2.5.3'
     implementation 'org.springframework.boot:spring-boot-configuration-processor:2.5.3'
     runtimeOnly 'com.h2database:h2:1.4.200'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools:2.5.3'
@@ -102,10 +100,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web:2.5.3'
 
     //Test Containers
-    testImplementation 'org.postgresql:postgresql:42.2.23'
-    testImplementation 'org.testcontainers:postgresql:1.16.0'
-    testImplementation 'org.testcontainers:junit-jupiter:1.16.0'
-    testImplementation 'org.testcontainers:jdbc:1.16.0'
+    intTestRuntimeOnly 'org.postgresql:postgresql:42.2.23'
+    intTestImplementation 'org.testcontainers:postgresql:1.16.0'
+    intTestRuntimeOnly 'org.testcontainers:junit-jupiter:1.16.0'
+    intTestImplementation 'org.testcontainers:jdbc:1.16.0'
 
     //Contract Testing
     testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier:3.0.3'
@@ -114,15 +112,15 @@ dependencies {
 
 
 }
-processResources {
-    eachFile {
-        if (relativeSourcePath ==~ /^(config\/)?application(-\w+)?.(ya?ml|properties)$/) {
-            project.properties
-                    .findAll { it?.value instanceof String }
-                    .each { filter(ReplaceTokens, tokens: [(it.key): it.value]) }
-        }
-    }
-}
+//processResources {
+//    eachFile {
+//        if (relativeSourcePath ==~ /^(config\/)?application(-\w+)?.(ya?ml|properties)$/) {
+//            project.properties
+//                    .findAll { it?.value instanceof String }
+//                    .each { filter(ReplaceTokens, tokens: [(it.key): it.value]) }
+//        }
+//    }
+//}
 
 bootJar {
 // https://docs.spring.io/spring-boot/docs/2.5.4/gradle-plugin/reference/htmlsingle/#packaging-executable.configuring.layered-archives.configuration
@@ -175,8 +173,27 @@ contractTest {
 test {
     useJUnitPlatform { excludeEngines 'junit-vintage' }
     outputs.dir snippetsDir
+    finalizedBy jacocoTestReport
 }
-
+testlogger {
+    theme 'mocha'
+    showExceptions true
+    showStackTraces true
+    showFullStackTraces false
+    showCauses true
+    slowThreshold 2000
+    showSummary true
+    showSimpleNames false
+    showPassed true
+    showSkipped true
+    showFailed true
+    showStandardStreams false
+    showPassedStandardStreams true
+    showSkippedStandardStreams true
+    showFailedStandardStreams true
+    logLevel 'lifecycle'
+}
+jacocoTestReport.dependsOn test
 asciidoctor {
     // By convention it sets
     // sourceDir to src/docs/asciidoc

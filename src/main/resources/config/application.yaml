@@ -2,21 +2,25 @@ spring:
   main:
     banner-mode: log
   config:
-    import: "configtree:db/"
+    import: configtree:config/
 
   application:
-    name: @project.artifactId@
+    name: @name@
 
   h2:
     console:
-      enabled: on
+      enabled: off
 
   sql:
     init:
       mode: never
 
   liquibase:
-    change-log: "classpath:/db/changelog/db.changelog-master.xml"
+    change-log: db/changelog/db.changelog-master.xml
+    url: ${db.url.jdbc}
+    user: ${db.username:sa}
+    password: ${db.password}
+    contexts: prod
     test-rollback-on-update: on
 
   datasource:
@@ -54,20 +58,20 @@ management:
 springdoc:
   use-management-port: on
   show-actuator: on
-  api-docs:
-    enabled: on
-    path: /api-docs
+  #api-docs:
+    #enabled: on
+    #path: /api-docs
 
 apidoc:
-  title: @project.name@
-  description: @project.description@
-  version: @project.version@
+  title: @name@
+  description: @description@
+  version: @version@
 
 debug: off
 trace: off
 logging:
   file:
-    path: /var/log/@build.name@
+    name: /var/log/spring-boot/@jarBaseName@.log
   level:
     root: error
     web: trace
