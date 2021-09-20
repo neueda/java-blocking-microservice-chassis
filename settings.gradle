@@ -1,15 +1,21 @@
 pluginManagement {
+//plugins
     plugins {
+        // Core
+        id 'jacoco'
+
         // Spring
         id 'org.springframework.boot' version sprinbBootVersion
         id 'io.spring.dependency-management' version springDependencyManagementVersion
         id 'org.springframework.cloud.contract' version springContractVersion
         id 'com.gorylenko.gradle-git-properties' version gitPropertiesVersion
 
-        // Docs
-        id 'com.github.johnrengelman.processes' version gradleProcessesVersion
+        //doc
         id 'org.springdoc.openapi-gradle-plugin' version springdocOpenapiVersion
+        id 'org.springdoc.openapi-ui' version springdocOpenapiuiVersion
         id 'org.asciidoctor.jvm.convert' version asciidoctorConvertVersion
+        id 'com.github.johnrengelman.processes' version gradleProcessesVersion
+
         // Tests
         id 'com.adarshr.test-logger' version testLoggerVersion
     }
