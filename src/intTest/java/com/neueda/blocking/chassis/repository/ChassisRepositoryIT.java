@@ -41,7 +41,7 @@ class ChassisRepositoryIT extends PostgresTestContainer {
         List<ChassisEntity> result = underTest.findByName(name);
 
         //then
-         BDDAssertions.then(result).isEqualTo(expected);
+        BDDAssertions.then(result).isEqualTo(expected);
     }
 
     @Test

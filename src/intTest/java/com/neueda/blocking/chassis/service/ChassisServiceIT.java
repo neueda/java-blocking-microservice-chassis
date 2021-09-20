@@ -1,5 +1,6 @@
 package com.neueda.blocking.chassis.service;
 
+
 import com.neueda.blocking.chassis.entity.ChassisEntity;
 import com.neueda.blocking.chassis.model.Chassis;
 import com.neueda.blocking.chassis.repository.ChassisRepository;
@@ -10,9 +11,7 @@ import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-
 import java.util.List;
-
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,7 +19,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 @SpringJUnitConfig(ChassisService.class)
-class ChassisServiceTests {
+class ChassisServiceIT {
 
     @MockBean
     private ChassisRepository chassisRepository;
@@ -34,8 +33,8 @@ class ChassisServiceTests {
     {
         //Given
         List<ChassisEntity> chassisEntity = List.of(
-                            new ChassisEntity(1L,"name","description 1"),
-                            new ChassisEntity(2L,"name","description 2"));
+                new ChassisEntity(1L,"name","description 1"),
+                new ChassisEntity(2L,"name","description 2"));
         when(chassisRepository.findAll())
                 .thenReturn(chassisEntity);
 
