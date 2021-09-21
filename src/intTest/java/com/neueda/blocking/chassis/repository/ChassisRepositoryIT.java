@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.BDDAssertions.then;
-
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class ChassisRepositoryIT extends PostgresTestContainer {
